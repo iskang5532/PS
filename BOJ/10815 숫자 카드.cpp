@@ -1,9 +1,9 @@
 /* 
- * 10815 ìˆ«ì ì¹´ë“œ
- * ì´ì§„ íƒìƒ‰ (binary search)
- * ì‹œê°„ ë³µì¡ë„: ?
- * ë¬¸ì œ: https://www.acmicpc.net/problem/10815
- * ETC) ê¸°ë³¸ì ì¸ ì´ì§„ íƒìƒ‰ STLì„ ì´ìš©í•œ ë¬¸ì œì¸ë“¯
+ * 10815 ¼ıÀÚ Ä«µå
+ * ÀÌÁø Å½»ö (binary search)
+ * ½Ã°£ º¹Àâµµ: ?
+ * ¹®Á¦: https://www.acmicpc.net/problem/10815
+ * ETC) ±âº»ÀûÀÎ ÀÌÁø Å½»ö STLÀ» ÀÌ¿ëÇÑ ¹®Á¦ÀÎµí
  */
 
 #include <iostream>
@@ -24,13 +24,13 @@ int main()
     vector<int> arr(n);
     for (auto &num : arr)
         cin >> num;
-    sort(arr.begin(), arr.end()); // ì´ì§„ íƒìƒ‰ì„ ìœ„í•´ì„œëŠ” ëŒ€ìƒ ë°°ì—´ì— ëŒ€í•´ì„œ ì •ë ¬ì´ í•„ìš”í•¨
+    sort(arr.begin(), arr.end()); // ÀÌÁø Å½»öÀ» À§ÇØ¼­´Â ´ë»ó ¹è¿­¿¡ ´ëÇØ¼­ Á¤·ÄÀÌ ÇÊ¿äÇÔ
     cin >> n;
     for (int i = 0; i < n; i++)
     {
         int num;
         cin >> num;
 
-        cout << binary_search(arr.begin(), arr.end(), num) << endl; // ê°’ì„ ë°°ì—´ì—ì„œ ì´ì§„ íƒìƒ‰ìœ¼ë¡œ ì°¾ì€ í›„, ìˆìœ¼ë©´ true, ì—†ìœ¼ë©´ falseë¥¼ ë°˜í™˜
+        cout << binary_search(arr.begin(), arr.end(), num) << endl; // °ªÀ» ¹è¿­¿¡¼­ ÀÌÁø Å½»öÀ¸·Î Ã£Àº ÈÄ, ÀÖÀ¸¸é true, ¾øÀ¸¸é false¸¦ ¹İÈ¯
     }
 }
