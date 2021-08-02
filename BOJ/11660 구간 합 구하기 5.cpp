@@ -1,13 +1,13 @@
 /* 
- * 11660 ±¸°£ ÇÕ ±¸ÇÏ±â 5
+ * 11660 êµ¬ê°„ í•© êµ¬í•˜ê¸° 5
  * DP
- * ½Ã°£ º¹Àâµµ: ?
- * ¹®Á¦: https://www.acmicpc.net/problem/11660
- * ETC.) ÆäÀÌÁöÀÇ ¹Ø¿¡ ÀÖ´Â ¾Ë°í¸®Áò ºÐ·ù¿¡¼­ '´©Àû ÇÕ'ÀÌ¶ó ÀûÈù ±ÛÀ» º¸°í °¨À» ¾òÀ½.
- * Ã¹ Ç®ÀÌ´Â µÎ ÁÂÇ¥°¡ ÁÖ¾îÁú ¶§¸¶´Ù ±×¿¡ ¸Â´Â °ªµéÀ» ´õÇÏ´Â ½ÄÀ¸·Î Ç®¾úÁö¸¸, ½Ã°£ ÃÊ°ú.
- * µÎ ¹øÂ° Ç®ÀÌ´Â ÀÔ·ÂµÈ Çà·Ä arr¸¦ ÀÌ¿ëÇÏ¿© dp¸¦ ¸¸µë.
- * dp[col][row]ÀÏ ¶§, col¿¡¼­ 0¿¡¼­ºÎÅÍ row±îÁöÀÇ ÇÕÀ» ³ªÅ¸³¿.  ex) dp[2][5] == arr[2][0] + arr[2][1] + ... + arr[2][5]
- * ¼¼ ¹øÂ° Ç®ÀÌ´Â µÎ ¹øÂ° Ç®ÀÌ¸¦ ´Ùµë¾úÀ¸¸ç, ÀÔ·Â¹Þ´Â Çà·Ä°ªÀ» ÀÌ¿ëÇØ °ð¹Ù·Î dp¸¦ Á¦ÀÛ (ÇöÀç ÄÚµå)
+ * ì‹œê°„ ë³µìž¡ë„: ?
+ * ë¬¸ì œ: https://www.acmicpc.net/problem/11660
+ * ETC.) íŽ˜ì´ì§€ì˜ ë°‘ì— ìžˆëŠ” ì•Œê³ ë¦¬ì¦˜ ë¶„ë¥˜ì—ì„œ 'ëˆ„ì  í•©'ì´ë¼ ì ížŒ ê¸€ì„ ë³´ê³  ê°ì„ ì–»ìŒ.
+ * ì²« í’€ì´ëŠ” ë‘ ì¢Œí‘œê°€ ì£¼ì–´ì§ˆ ë•Œë§ˆë‹¤ ê·¸ì— ë§žëŠ” ê°’ë“¤ì„ ë”í•˜ëŠ” ì‹ìœ¼ë¡œ í’€ì—ˆì§€ë§Œ, ì‹œê°„ ì´ˆê³¼.
+ * ë‘ ë²ˆì§¸ í’€ì´ëŠ” ìž…ë ¥ëœ í–‰ë ¬ arrë¥¼ ì´ìš©í•˜ì—¬ dpë¥¼ ë§Œë“¬.
+ * dp[col][row]ì¼ ë•Œ, colì—ì„œ 0ì—ì„œë¶€í„° rowê¹Œì§€ì˜ í•©ì„ ë‚˜íƒ€ëƒ„.  ex) dp[2][5] == arr[2][0] + arr[2][1] + ... + arr[2][5]
+ * ì„¸ ë²ˆì§¸ í’€ì´ëŠ” ë‘ ë²ˆì§¸ í’€ì´ë¥¼ ë‹¤ë“¬ì—ˆìœ¼ë©°, ìž…ë ¥ë°›ëŠ” í–‰ë ¬ê°’ì„ ì´ìš©í•´ ê³§ë°”ë¡œ dpë¥¼ ì œìž‘ (= í˜„ìž¬ ì½”ë“œ)
  */
 
 #include <iostream>
@@ -22,7 +22,7 @@ int solution(const int dp[][MAX], const int y1, const int x1, const int y2, cons
 {
     int answer = 0;
     for (int col = y1; col <= y2; col++)
-        answer += (dp[col][x2] - dp[col][x1 - 1]); // x2±îÁöÀÇ ÇÕ¿¡¼­ x1 - 1±îÁöÀÇ ÇÕÀ» »©ÁÜ (= ¿øÇÏ´Â ¹üÀ§)
+        answer += (dp[col][x2] - dp[col][x1 - 1]); // x2ê¹Œì§€ì˜ í•©ì—ì„œ x1 - 1ê¹Œì§€ì˜ í•©ì„ ë¹¼ì¤Œ (= ì›í•˜ëŠ” ë²”ìœ„)
 
     return answer;
 }
@@ -41,7 +41,7 @@ int main()
         {
             int num;
             cin >> num;
-            dp[col][row] = dp[col][row - 1] + num; // ÀÌÀü dp°ª + ÀÔ·Â °ª
+            dp[col][row] = dp[col][row - 1] + num; // ì´ì „ dpê°’ + ìž…ë ¥ ê°’
         }
 
     while (k--)
