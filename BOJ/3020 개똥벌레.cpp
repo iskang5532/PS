@@ -42,5 +42,5 @@ int main()
     int _min = *min_element(pSum.begin(), pSum.end()); // 최솟값 탐색
     int cnt = count(pSum.begin(), pSum.end(), _min);   // 값의 개수 탐색
 
-    cout << _min << ' ' << cnt << endl;
+    cout << _min << " " << cnt << endl;
 }
