@@ -47,7 +47,7 @@ int main()
 
             if (l.empty() || k < l.top()) // 첫 입력 or 중앙값보다 작은 값일 경우, 왼쪽에 넣어 줌
                 l.push(k);
-            else // 그 외 (= 좌측 top과 동일 or 큰 값)
+            else // 그 외 (= 좌측 top과 동일 or 큰 값. 동일 값은 아무 곳에)
                 r.push(k);
 
             int cmp_size = l.size() - r.size(); // ?? if문 안에 변수가 아닌 직접 넣으면 제대로된 결과가 나오지 않음. 왜??
