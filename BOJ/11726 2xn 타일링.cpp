@@ -1,9 +1,9 @@
 /* 
- * 11726 2xn Å¸ÀÏ¸µ
- * Çà·Ä
- * ½Ã°£ º¹Àâµµ: O(logN)
- * ¹®Á¦: https://www.acmicpc.net/problem/11726
- * ETC) 4~5±îÁö ¼¼¾îºÃÀ» ¶§, ÇÇº¸³ªÄ¡ ¼ö¿­ÀÇ ÇüÅÂ·Î Áõ°¡ÇÑ´Ù´Â »ç½ÇÀ» ¾Ë ¼ö ÀÖÀ½
+ * 11726 2xn íƒ€ì¼ë§
+ * í–‰ë ¬
+ * ì‹œê°„ ë³µìž¡ë„: O(logN)
+ * ë¬¸ì œ: https://www.acmicpc.net/problem/11726
+ * ETC) 4~5ê¹Œì§€ ì„¸ì–´ë´¤ì„ ë•Œ, í”¼ë³´ë‚˜ì¹˜ ìˆ˜ì—´ì˜ í˜•íƒœë¡œ ì¦ê°€í•œë‹¤ëŠ” ì‚¬ì‹¤ì„ ì•Œ ìˆ˜ ìžˆìŒ
  */
 
 #include <iostream>
@@ -11,7 +11,7 @@
 using namespace std;
 
 #define endl "\n"
-#define MAX 1000 // ÃÖ´ë n
+#define MAX 1000 // ìµœëŒ€ n
 
 const int mod = 10007;
 
@@ -28,7 +28,7 @@ struct matrix
             {
                 for (int k = 0; k < 2; k++)
                     ret.arr[i][j] += m1.arr[i][k] * m2.arr[k][j];
-                ret.arr[i][j] %= mod; // 10007À» ³ª´« °ªÀ» ÀúÀå
+                ret.arr[i][j] %= mod; // 10007ì„ ë‚˜ëˆˆ ê°’ì„ ì €ìž¥
             }
 
         return ret;
@@ -42,7 +42,7 @@ int main()
 
     int n;
     cin >> n;
-    n++; // ÀÏ¹ÝÀûÀÎ ÇÇº¸³ªÄ¡ÀÇ °æ¿ì, [2] == 1ÀÌÁö¸¸, ÀÌ ¹®Á¦´Â [2] == 2ÀÌ¹Ç·Î +1À» ÇØÁÖ¾î ÅÛÆ÷¸¦ ¸ÂÃçÁÜ
+    n++; // ì¼ë°˜ì ì¸ í”¼ë³´ë‚˜ì¹˜ì˜ ê²½ìš°, [2] == 1ì´ì§€ë§Œ, ì´ ë¬¸ì œëŠ” [2] == 2ì´ë¯€ë¡œ +1ì„ í•´ì£¼ì–´ í…œí¬ë¥¼ ë§žì¶°ì¤Œ
 
     matrix answer = {{{1, 0}, {0, 1}}};
     matrix m = {{{1, 1}, {1, 0}}};

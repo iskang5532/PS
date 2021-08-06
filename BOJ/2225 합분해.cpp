@@ -1,11 +1,11 @@
 /* 
- * 2225 ÇÕºÐÇØ
+ * 2225 í•©ë¶„í•´
  * DP
- * ½Ã°£ º¹Àâµµ: ?
- * ¹®Á¦: https://www.acmicpc.net/problem/2225
- * ETC.) DP¸¦ ÀÌ¿ëÇÑ ¹®Á¦¶ó´Â °ÍÀ» ¾Ë¾Ò±â ¶§¹®¿¡ Á¾ÀÌ¿¡ ²ôÀû¿©º¸°í¼­ ±ÔÄ¢À» ¾Ë¾Æ³Â´Ù.
- * ¸¸¾à, Ç®ÀÌ°¡ DP¶ó´Â °ÍÀ» ¸ð¸£´Â »óÅÂ·Î ¹®Á¦¸¦ Á¢Çß´Ù¸é, »ó´çÈ÷ ¿À·¡ °É·ÈÀ» °Å¶ó »ý°¢.
- * Âü°í: 
+ * ì‹œê°„ ë³µìž¡ë„: ?
+ * ë¬¸ì œ: https://www.acmicpc.net/problem/2225
+ * ETC.) DPë¥¼ ì´ìš©í•œ ë¬¸ì œë¼ëŠ” ê²ƒì„ ì•Œì•˜ê¸° ë•Œë¬¸ì— ì¢…ì´ì— ë„ì ì—¬ë³´ê³ ì„œ ê·œì¹™ì„ ì•Œì•„ëƒˆë‹¤.
+ * ë§Œì•½, í’€ì´ê°€ DPë¼ëŠ” ê²ƒì„ ëª¨ë¥´ëŠ” ìƒíƒœë¡œ ë¬¸ì œë¥¼ ì ‘í–ˆë‹¤ë©´, ìƒë‹¹ížˆ ì˜¤ëž˜ ê±¸ë ¸ì„ ê±°ë¼ ìƒê°.
+ * ì°¸ê³ : 
  */
 
 #include <iostream>
@@ -25,16 +25,16 @@ int main()
     int n, k; // 1 <= 200
     cin >> n >> k;
 
-    // prev´Â ÀÌÀü ¹è¿­(k-1 or col-1)ÀÇ °ªÀ», curr´Â ÇöÀç ¹è¿­(k)À» ÀÇ¹Ì
+    // prevëŠ” ì´ì „ ë°°ì—´(k-1 or col-1)ì˜ ê°’ì„, currëŠ” í˜„ìž¬ ë°°ì—´(k)ì„ ì˜ë¯¸
     vector<int> prev(n + 1, 0), curr(n + 1, 0);
 
     for (int col = 1; col <= k; col++)
     {
-        prev = curr; // curr°ªÀ» °»½ÅÇÏ±â Àü¿¡ prev¿¡ °ªÀ» ÀúÀåÇÔ
+        prev = curr; // currê°’ì„ ê°±ì‹ í•˜ê¸° ì „ì— prevì— ê°’ì„ ì €ìž¥í•¨
 
-        curr[0] = 1; // // ¸Ç ¾ÕÀÇ °ªÀ» 1·Î °íÁ¤
+        curr[0] = 1; // // ë§¨ ì•žì˜ ê°’ì„ 1ë¡œ ê³ ì •
         for (int row = 1; row <= n; row++)
-            curr[row] = (curr[row - 1] + prev[row]) % MOD; // ¿ÞÂÊ °ª(row-1) + À§ÀÇ °ª(col-1)ÀÌ ÇöÀç (col, row)¿¡ À§Ä¡ÇÏ´Â °ªÀÌ µÊ
+            curr[row] = (curr[row - 1] + prev[row]) % MOD; // ì™¼ìª½ ê°’(row-1) + ìœ„ì˜ ê°’(col-1)ì´ í˜„ìž¬ (col, row)ì— ìœ„ì¹˜í•˜ëŠ” ê°’ì´ ë¨
     }
 
     cout << curr[n];
