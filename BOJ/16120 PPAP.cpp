@@ -4,7 +4,6 @@
  * 문제: https://www.acmicpc.net/problem/16120
  * ETC.) 문자열이 PPAPPPAP와 같이 여러 개의 PPAP가 있어도 PPAP인 줄 알았는데 아니었음. (덕분에 오래 걸림)
  * 입력받은 문자열에 대해 앞에서부터 문자를 하나 씩 빼내며, 빼낸 문자열이 "PPAP"가 되었을 경우, 'P'로 변경해줌.
- * 참고: 
  */
 
 #include <iostream>
