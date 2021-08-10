@@ -1,9 +1,9 @@
 /* 
  * 12738 가장 긴 증가하는 부분 수열 3
  * LIS
- * 시간 복잡도: nlogn
+ * 시간 복잡도: O(nlogn)
  * 문제: https://www.acmicpc.net/problem/12738
- * ETC) lower_bound를 이용하여 자리를 찾는 방법이 신선했으며, lower_bound에 대한 개념 이해가 헷갈림
+ * ETC) lower_bound를 이용하여 자리를 찾는 방법이 신선했으며, lower_bound 개념의 이해가 헷갈림
  * 참고: https://seungkwan.tistory.com/8
  */
 
