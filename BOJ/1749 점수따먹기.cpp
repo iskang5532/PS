@@ -1,6 +1,6 @@
 /* 
  * 1749 점수따먹기
- * DP
+ * DP, 누적합
  * 시간 복잡도: ?
  * 문제: https://www.acmicpc.net/problem/1749
  * ETC.) 너무 어려웠음
