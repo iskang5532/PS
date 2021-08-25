@@ -7,6 +7,7 @@
  * 참고: https://seungkwan.tistory.com/8
  */
 
+// sol_1)
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -39,6 +40,42 @@ int main()
     }
 
     cout << len;
+}
+
+// sol_2)
+// LIS의 크기를 미리 할당하지 않음
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+#define endl "\n"
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL), cout.tie(NULL);
+
+    int n;
+    cin >> n;
+    vector<int> arr(n);
+    for (auto &elem : arr)
+        cin >> elem;
+
+    vector<int> LIS;
+    for (int i = 0; i < n; i++)
+    {
+        int idx = arr[i];
+
+        auto pos = lower_bound(LIS.begin(), LIS.end(), idx);
+        if (pos == LIS.end())
+            LIS.push_back(idx);
+        else
+            *pos = idx;
+    }
+
+    cout << LIS.size();
 }
 
 // lower_bound
