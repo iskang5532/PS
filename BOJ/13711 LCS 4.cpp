@@ -3,8 +3,10 @@
  * LIS
  * 시간 복잡도: O(NlogN)
  * 문제: https://www.acmicpc.net/problem/13711
- * etc.) 각 수열에서의 값은 중복되지 않으며, n까지의 값이 입력됨.
- * LIS 풀이를 이용한 LCS 풀이
+ * etc.) 
+ * - 각 수열에서의 값은 중복되지 않으며, n까지의 값이 입력됨.
+ * - LIS 풀이를 이용한 LCS 풀이
+ * 이 풀이가 가능한 이유는, 각 수열마다 중복된 값이 없으며 서로 간의 값이 같기 때문인듯.
  * 참고: https://travelbeeee.tistory.com/490 (이론 참고)
  */
 
