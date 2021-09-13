@@ -4,6 +4,7 @@
  * 시간 복잡도: ?
  * 문제: https://www.acmicpc.net/problem/12865
  * etc.) 이렇게 풀면 되겠다~ 하고 감을 잡기가 어려움.
+ * 참고: https://gsmesie692.tistory.com/113
  */
 
 #include <iostream>
@@ -13,10 +14,6 @@
 using namespace std;
 
 #define endl "\n"
-#define w first
-#define v second
-
-typedef pair<int, int> pii;
 
 int main()
 {
@@ -26,19 +23,15 @@ int main()
     int n, k; // 1 <= n <= 100, 1 <= k <= 100k
     cin >> n >> k;
 
-    vector<pii> arr(n); // 1 <= w <= 100k, 0 <= v <= 1k
-    for (auto &elem : arr)
-        cin >> elem.w >> elem.v;
-    sort(arr.begin(), arr.end());
+    vector<int> w(n), v(n); // 1 <= w <= 100k, 0 <= v <= 1k
+    for (int i = 0; i < n; i++)
+        cin >> w[i] >> v[i];
 
     vector<int> curr(k + 1, 0), prev(k + 1, 0); // dp[n]일 경우, 무게 n일 때 만들 수 있는 최대 가치
-    for (const auto &elem : arr)                // 물건을 하나 씩 확인함
+    for (int i = 0; i < n; i++)                 // 물건을 하나씩 확인함
     {
-        if (elem.w > k) // 만약 현재 물건이 원하는 무게를 충족하지 않는 경우 (이는 곧 앞으로의 물건 또한 무게가 나간다는 뜻이기 때문에 종료시킴)
-            break;
-
-        for (int pos = elem.w; pos <= k; pos++)                      // 현재 물건의 무게(= pos)에서부터 측정
-            curr[pos] = max(prev[pos], elem.v + prev[pos - elem.w]); // 이전 값의 가치 or 현재 물건의 가치 + 이전 값 (현재 물건을 포함시킨 경우이기 때문에 무게는 0에서부터)
+        for (int pos = w[i]; pos <= k; pos++)                    // 현재 물건의 무게(= pos)에서부터 측정
+            curr[pos] = max(prev[pos], v[i] + prev[pos - w[i]]); // 이전 값의 가치 or 현재 물건의 가치 + 이전 값 (현재 물건을 포함시킨 경우이기 때문에 무게는 0에서부터)
 
         prev = curr;
     }
