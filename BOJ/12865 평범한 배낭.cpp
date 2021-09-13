@@ -9,7 +9,6 @@
 
 #include <iostream>
 #include <vector>
-#include <algorithm> // sort
 
 using namespace std;
 
@@ -28,9 +27,9 @@ int main()
         cin >> w[i] >> v[i];
 
     vector<int> curr(k + 1, 0), prev(k + 1, 0); // dp[n]일 경우, 무게 n일 때 만들 수 있는 최대 가치
-    for (int i = 0; i < n; i++)                 // 물건을 하나씩 확인함
+    for (int i = 0; i < n; i++) // 물건을 하나씩 확인함
     {
-        for (int pos = w[i]; pos <= k; pos++)                    // 현재 물건의 무게(= pos)에서부터 측정
+        for (int pos = w[i]; pos <= k; pos++) // 현재 물건의 무게(= pos)에서부터 측정
             curr[pos] = max(prev[pos], v[i] + prev[pos - w[i]]); // 이전 값의 가치 or 현재 물건의 가치 + 이전 값 (현재 물건을 포함시킨 경우이기 때문에 무게는 0에서부터)
 
         prev = curr;
