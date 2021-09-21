@@ -1,6 +1,6 @@
 /* 
  * 1759 암호 만들기
- * brute-force
+ * brute-force, backtracking
  * 시간 복잡도: ?
  * 문제: https://www.acmicpc.net/problem/1759
  * etc.) line.45에서 좀 헷갈렸음.
