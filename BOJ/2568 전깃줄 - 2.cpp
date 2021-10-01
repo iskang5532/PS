@@ -1,7 +1,7 @@
 /* 
  * 2568 전깃줄 - 2
  * LIS
- * 시간 복잡도: O(NlogN) (LIS를 구할 때의 시간복잡도)
+ * 시간 복잡도: O(NlogN) (LIS를 구할 때의 시간 복잡도)
  * 문제: https://www.acmicpc.net/problem/2568
  * etc.) LIS의 값을 구하는 문제가 아닌, LIS가 아닌 값을 구하는 문제.
  */

@@ -1,7 +1,7 @@
 /* 
  * 2550 전구
  * LIS
- * 시간 복잡도: O(NlogN) (LIS를 구할 때의 시간복잡도)
+ * 시간 복잡도: O(NlogN) (LIS를 구할 때의 시간 복잡도)
  * 문제: https://www.acmicpc.net/problem/2550
  * etc.) 번호와 번호로 연결되어 있는 상태를 순서로 바꾸는 것이 복잡함.
  */
