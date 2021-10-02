@@ -3,7 +3,7 @@
  * 이진 탐색 (binary search)
  * 시간 복잡도: ?
  * 문제: https://www.acmicpc.net/problem/10815
- * ETC) 기본적인 이진 탐색 STL을 이용한 문제인듯
+ * ETC) 기본적인 이진 탐색 STL을 이용한 문제인 듯.
  */
 
 #include <iostream>

@@ -3,7 +3,7 @@
  * map
  * 시간 복잡도: ?
  * 문제: https://www.acmicpc.net/problem/1302
- * ETC.) 맵을 이용한 기본적인 문제인듯 싶음.
+ * ETC.) 맵을 이용한 기본적인 문제인 듯 싶음.
  */
 
 #include <iostream>
