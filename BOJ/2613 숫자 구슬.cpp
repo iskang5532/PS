@@ -11,6 +11,8 @@
  * 주의할 점은, 그룹을 나눈 후에 구한 최댓값(= l)을 제대로 구했다고 하더라도 cnt != m이 될 수 있음. (반례는 밑에)
  * - 아직 의문인 분할 대상이 l값일 경우, 분할 시에는 l값이 아니게 되지 않는가? (1을 출력하는 것을 보아 입력이 1일 때에만 생기는 일인듯 싶기도)
  * 참고: https://www.acmicpc.net/board/view/25042 (반례)
+ * https://velog.io/@hschoi1104/BOJ-2613-%EC%88%AB%EC%9E%90%EA%B5%AC%EC%8A%AC (이론)
+ * https://blog.naver.com/jinhan814/222345328120 (코드)
  */
 
 #include <iostream>
