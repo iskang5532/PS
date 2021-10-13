@@ -3,30 +3,35 @@
  * 누적 합
  * 시간 복잡도: ?
  * 문제: https://www.acmicpc.net/problem/20440
- * ETC.) 처음엔 pq에 입장 시간과 퇴장 시간을 나누어 값을 넣고 해결하려고 했지만,
- * [4 6] - [6 10]과 같은 이어지는 형태의 경우를 해결하지 못함
+ * ETC.) 처음엔 pq에 입장 시간과 퇴장 시간을 나누어 값을 넣고 해결하려고 했지만 [4 6] - [6 10]과 같은 이어지는 형태의 경우를 해결하지 못함.
+ * 1) 입력받은 시간들을 시작을 기준으로 오름차 정렬 후, 순차적으로 이용.
+ * 2-1) 현재 시간대가 이전 시간대와 겹치는 구간이 있는 경우 (= 모기가 이전 시간대보다 +1)
+ * - 겹쳐지는 구간을 저장하며 모기의 마릿수 +1
+ * 2-2) 현재 시간대가 이전 시간대와 겹치지 않으면서 서로 붙어있는 경우 (= prev.r == curr.l)
+ * - 구간의 길이를 늘림
+ * 2-3) 현재 시간대가 이전 시간대와 겹치지 않으면서 서로 떨어져 있는 경우 (= prev.r != curr.l)
+ * - 넘김
  * 참고: https://velog.io/@bgg01578/%EB%B0%B1%EC%A4%80-20440 (코드 해석)
  */
 
 #include <iostream>
-#include <vector>
-#include <algorithm>
 #include <queue>
+#include <algorithm> // sort
 
 using namespace std;
 
 #define endl "\n"
 
-struct P
+struct pii
 {
     int l, r;
 };
 
-bool cmp(const P &a, const P &b) { return a.l < b.l; } // 입장 시간 기준 오름차순 (= 빠른 값이 앞으로)
+bool cmp(const pii &a, const pii &b) { return a.l < b.l; } // 오름차순 (입장 시간 기준. 빠른 값이 앞으로)
 
-struct _greater // 퇴장 시간 기준 오름차순 (= 빠른 값이 앞으로)
+struct _greater // 오름차순 (퇴장 시간 기준. 빠른 값이 앞으로)
 {
-    bool operator()(const P &a, const P &b) { return a.r > b.r; }
+    bool operator()(const pii &a, const pii &b) { return a.r > b.r; }
 };
 
 int main()
@@ -37,34 +42,33 @@ int main()
     int n;
     cin >> n;
 
-    vector<P> arr(n);
-    for (auto &elem : arr)
-        cin >> elem.l >> elem.r;
+    vector<pii> arr(n);
+    for (auto &[l, r] : arr)
+        cin >> l >> r;
     sort(arr.begin(), arr.end(), cmp);
 
-    P answer = {0, 0};
-    // pq.top(): 입력된 시간대들 중 모기가 가장 많으면서 입장 및 퇴장 시간이 가장 느린 구간
-    // pq.size(): 모기의 마릿수
-    priority_queue<P, vector<P>, _greater> pq;
-    int h = 0; // 가장 많이 있는 시간대의 모기 마릿수
-    for (int i = 0; i < n; i++)
+    // top(): 입력된 시간대들 중 모기가 가장 많으면서 입장 및 퇴장 시간이 가장 느린 구간
+    // size(): 모기의 마릿수
+    priority_queue<pii, vector<pii>, _greater> pq;
+    pii ans = {0, 0}; // 모기가 가장 많이 존재하는 구간
+    int cnt = 0;      // 모기 마릿수 (가장 많은)
+    for (const auto &curr : arr)
     {
-        // i번째 arr의 값이 이전 값(= pq.top())과 같거나 뒤에 있는 경우 (= 갱신해야 함)
-        while (!pq.empty() && pq.top().r <= arr[i].l)
+        while (!pq.empty() && pq.top().r <= curr.l) // i번째 arr의 값이 이전 값(= pq.top())과 같거나 뒤에 있는 경우 (= 갱신해야 함)
             pq.pop();
-        pq.push(arr[i]);
+        pq.push(curr);
 
-        if (pq.size() > h) // 마릿수가 많아진 경우, 갱신
+        if (pq.size() > cnt) // 마릿수가 많아진 경우, 갱신
         {
-            h = pq.size();
-            answer = {arr[i].l, pq.top().r}; // 여기서 r은 pq.top().r(= 가장 빠른 퇴장 시간. 즉, h가 낮아지는 지점임)
+            cnt = pq.size();
+            ans = pii{curr.l, pq.top().r}; // 여기서 r은 pq.top().r(= 가장 빠른 퇴장 시간. 즉, h가 낮아지는 지점임)
         }
-        else if (h == pq.size() && answer.r == arr[i].l) // 높이가 같으며 퇴장 시간 및 입장 시간이 같은 경우, 연결해줌
-            answer.r = arr[i].r;
+        else if (cnt == pq.size() && ans.r == curr.l) // 마릿수가 같으며 퇴장 시간 및 입장 시간이 같은 경우 서로 연결
+            ans.r = curr.r;
     }
 
-    cout << h << endl;
-    cout << answer.l << " " << answer.r;
+    cout << cnt << endl;
+    cout << ans.l << " " << ans.r;
 }
 
 // 3
@@ -72,7 +76,6 @@ int main()
 // 4 10
 // 5 12
 
-/* ___ unresolved ___ */
 // 1차
 // #include <iostream>
 // #include <queue>
@@ -81,14 +84,14 @@ int main()
 
 // #define endl "\n"
 
-// struct P
+// struct pii
 // {
 //     int pos, state;
 // };
 
 // struct _greater
 // {
-//     bool operator()(const P &a, const P &b)
+//     bool operator()(const pii &a, const pii &b)
 //     {
 //         if (a.pos == b.pos)
 //             return a.state > b.state;
@@ -104,7 +107,7 @@ int main()
 //     int n;
 //     cin >> n;
 
-//     priority_queue<P, vector<P>, _greater> q;
+//     priority_queue<pii, vector<pii>, _greater> q;
 //     for (int i = 0; i < n; i++)
 //     {
 //         int l, r;
@@ -117,7 +120,7 @@ int main()
 //     int _max = 0, _min = 0, cnt = 0;
 //     while (!q.empty())
 //     {
-//         P curr = q.top();
+//         pii curr = q.top();
 //         q.pop();
 
 //         if (curr.state == 1)
