@@ -1,6 +1,6 @@
 /*
     1700 멀티탭 스케줄링
-    (2,020KB, 0ms)
+    그리디 (2,020KB, 0ms)
     시간 복잡도: ?
     문제: https://www.acmicpc.net/problem/1700
     etc.) 첫 풀이에서는 맵을 이용하여 개수를 이용하여 풀었지만 실패하였으며, 이후 가장 늦게 사용하는 플래그를 제거하는 쪽으로 풀이. (이를 구현하는 방법이 조금 이상하며, 더 쉬운 방법이 있을 텐데 귀찮았음.)
@@ -45,7 +45,7 @@ int main()
     vector<bool> plug(mx + 1, false); // plug[i]일 경우, i번째 플러그를 사용 중
     int cnt = 0, ans = 0;             // 멀티탭 사용 개수 cnt, 교체 횟수 ans
     for (auto curr = arr.begin(); curr != arr.end(); curr++)
-        if (plug[*curr])
+        if (plug[*curr]) // 사용 중인 플래그인 경우
             continue;
         else if (cnt != n) // 멀티탭 공간이 남는 경우
             plug[*curr] = true, cnt++;
