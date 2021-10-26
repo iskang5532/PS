@@ -27,14 +27,14 @@ using namespace std;
 #define FAST_IO ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
 #define endl "\n"
 
-int NUMBER[26]; // 알파벳의 변환된 숫자를 저장
+int ALPHABET[26]; // 알파벳의 변환된 숫자를 저장
 
 int to_num(const string &str)
 {
     string ret;
 
     for (const auto &c : str)
-        ret += NUMBER[c - 'A'] + '0';
+        ret += ALPHABET[c - 'A'] + '0';
 
     return stoi(ret);
 }
@@ -67,11 +67,11 @@ int main()
         vec.push_back({cnt, c});
     sort(vec.begin(), vec.end(), greater<pair<int, char>>());
 
-    fill(NUMBER, NUMBER + 26, -1);
+    fill(ALPHABET, ALPHABET + 26, -1);
     int t = 9; // 알파벳에 부여할 숫자
     for (const auto &[cnt, c] : vec)
-        if (NUMBER[c - 'A'] == -1) // 만약 현재 알파벳에 부여된 수가 없을 경우
-            NUMBER[c - 'A'] = t, t--;
+        if (ALPHABET[c - 'A'] == -1) // 만약 현재 알파벳에 부여된 수가 없을 경우
+            ALPHABET[c - 'A'] = t, t--;
 
     int ans = 0;
     for (const auto &str : arr)
