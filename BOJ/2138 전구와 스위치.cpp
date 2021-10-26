@@ -13,7 +13,8 @@
     다른 경우, [0]을 한 번만 눌러줘야 하는데 [0]을 누를 수 있는 스위치인 [0]과 [1]을 한 번만 눌러줘야 한다.
     즉, [0]일 누르는 경우 한 번, [1]을 누르는 경우 한 번씩 수행해줘야 한다.
     참고)
-    이론: https://staticvoidlife.tistory.com/143
+    이론: https://www.acmicpc.net/board/view/21452
+        https://staticvoidlife.tistory.com/143
         https://blog.naver.com/jinhan814/222259251875
  */
 
