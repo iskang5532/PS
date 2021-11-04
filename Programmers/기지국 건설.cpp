@@ -33,14 +33,14 @@ int solution(int n, vector<int> stations, int w)
     return ans;
 }
 
-#include <iostream>
-#define endl "\n"
-int main()
-{
-    cout << solution(11, {4, 11}, 1) << endl; // 3
-    cout << solution(16, {9}, 2) << endl;     // 3
-    cout << solution(10, {3}, 10) << endl;    // 0
-}
+// #include <iostream>
+// #define endl "\n"
+// int main()
+// {
+//     cout << solution(11, {4, 11}, 1) << endl; // 3
+//     cout << solution(16, {9}, 2) << endl;     // 3
+//     cout << solution(10, {3}, 10) << endl;    // 0
+// }
 
 // TLE
 // int solution(int n, vector<int> stations, int w)
