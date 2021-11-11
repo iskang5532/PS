@@ -67,6 +67,61 @@ int main()
     cout << ans;
 }
 
+// sol.2) 유니온 파인드
+// 이론 참고: https://m.blog.naver.com/ndb796/221230967614
+#include <iostream>
+
+using namespace std;
+#define FAST_IO ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
+
+#ifndef ONLINE_JUDGE
+#define CUSTOM
+#endif
+
+#define endl "\n"
+#define MAX 1000 + 1 // 정점의 최대 개수
+
+int parent[MAX];
+
+int find_parent(int x) // 값의 부모 노드 찾기
+{
+    if (x == parent[x]) // 자기 자신이 부모 노드인 경우 (= 더 이상 올라갈 곳이 없는 근 노드)
+        return x;
+    else // 부모 노드를 찾으며, 현재 노드의 부모 노드는 찾게될 근 노드로 갱신
+        return parent[x] = find_parent(parent[x]);
+    // return x == parent[x] ? x : parent[x] = find_parent(parent[x]);
+}
+void union_parent(int u, int v) { u = find_parent(u), v = find_parent(v), parent[v] = u; } // 근 노드끼리 연결
+
+int main()
+{
+#ifdef CUSTOM
+    cout << "[CUSTOM]" << endl;
+#else // BOJ
+    FAST_IO;
+#endif
+
+    int n, m; // 정점의 개수 N(1 ≤ N ≤ 1k), 간선의 개수 M(0 ≤ M ≤ N×(N-1)/2)
+    cin >> n >> m;
+
+    for (int i = 1; i <= n; i++)
+        parent[i] = i; // 노드 설정
+
+    for (int i = 0; i < m; i++)
+    {
+        int u, v; // 간선의 양 끝점 u, v(1 ≤ u, v ≤ N, u ≠ v)
+        cin >> u >> v;
+
+        union_parent(u, v);
+    }
+
+    int ans = 0;
+    for (int i = 1; i <= n; i++)
+        if (parent[i] == i) // 만약 근 노드인 경우 (= 더 이상 이어질 곳이 없거나 연결의 중점이며, 이는 구해야 하는 요소)
+            ans++;
+    cout << ans;
+}
+
 // 100%
 // 6 2
 // 3 4
