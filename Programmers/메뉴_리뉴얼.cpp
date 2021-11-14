@@ -9,8 +9,12 @@
     - 코스의 개수를 하나씩 입력받으며, 맵에서 길이를 이용하여 탐색.
      - 길이가 2일 경우 map[2]에서 탐색.
      - map[2]에서 value의 가장 큰 값(= mx)을 찾은 후, mx와 같은 갑의 문자열을 모두 ans에 저장.
+    조합 구현에 대해.
+    - 비트를 이용해 조합을 구현.
+    - 길이가 5인 문자열 str이 있으며 2개를 뽑는 경우, 00011의 값을 만든 후 next_permutation을 실행.
+    첫 번째 값인 00011의 경우에는 str[3]과 str[4]을 이용한 문자열이 만들어지며, 이를 저장함.
     etc.)
-    - 조합 구현은 할 때마다 까먹어서 애먹는듯
+    - 조합 구현 문제는 풀 때마다 까먹어서 애먹는듯
  */
 
 #include <string>
@@ -24,29 +28,29 @@ using namespace std;
 
 vector<string> solution(vector<string> orders, vector<int> course)
 {
-    unordered_map<string, int> m[MAX];
+    unordered_map<string, int> m[MAX]; // m[3] = {{ABC, 3}, {DEF, 5}}일 때, 문자열의 길이가 3인 배열에서 문자열 ABC는 3번, DEF는 5번 만들어짐.
     for (auto order : orders)
     {
         sort(order.begin(), order.end());
         int len = order.length();
 
-        for (int sel = 2; sel <= len; sel++)
+        for (int sel = 2; sel <= len; sel++) // 선택할 문자의 개수
         {
-            string comb;
+            string bit;
             for (int i = 0; i < len - sel; i++)
-                comb += "0";
-            for (int i = 0; i < sel; i++)
-                comb += "1";
+                bit += "0";
+            for (int i = 0; i < sel; i++) // 선택할 개수만큼 1 추가 (next_permutation을 위해 낮은 자릿수부터 값을 추가)
+                bit += "1";
 
             do // combinate
             {
-                string str;
+                string str; // 조합으로 만들 문자열 저장
                 for (int i = 0; i < len; i++)
-                    if (comb[i] == '1')
+                    if (bit[i] == '1')
                         str += order[i];
                 sort(str.begin(), str.end());
-                m[str.length()][str]++;
-            } while (next_permutation(comb.begin(), comb.end()));
+                m[str.length()][str]++; // 만들어진 문자열의 횟수 +1
+            } while (next_permutation(bit.begin(), bit.end()));
         }
     }
 
@@ -56,11 +60,11 @@ vector<string> solution(vector<string> orders, vector<int> course)
         // if (m[i].empty())
         //     continue;
 
-        int mx = 0;
+        int mx = 0; // 가장 많은 횟수 저장
         for (const auto &[str, k] : m[i])
             mx = max(mx, k);
 
-        if (mx != 1)
+        if (mx != 1) // 둘 이상의 손님이 주문해야 하므로 1은 제외
             for (const auto &[str, k] : m[i])
                 if (k == mx)
                     ans.push_back(str);
