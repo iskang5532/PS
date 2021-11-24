@@ -56,6 +56,7 @@ void dfs(const int start, int curr)
         while (nxt != curr) // 한 바퀴 돌아 시작점으로 돌아온 경우
             cnt++, nxt = parent[nxt];
     }
+    // else if (visited[curr] != start) return; // 이전에 방문한 정점. 즉, 사이클에 속하는 정점의 개수를 이전에 파악 완료한 상태
 }
 
 int main()
