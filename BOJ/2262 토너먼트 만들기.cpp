@@ -84,6 +84,79 @@ int main()
     cout << dp[0][n - 1];
 }
 
+/*
+    sol.2)
+    그리디 (2,020KB, 0ms)
+    시간 복잡도: ?
+    풀이)
+    - 가장 큰 값(= 순위가 낮은 사람)을 우선으로 시합을 진행한다.
+    여기서 시합을 진행할 사람은 두 명이 있을 수 있는데, 이 또한 둘 중 더 큰 값과 시합을 진행한다.
+    만약 가장 왼쪽 혹은 오른쪽 사람일 경우, 한 명밖에 없으므로 바로 옆 한 명과 시합을 진행시켜준다.
+    - 가장 큰 값을 순서대로 출력해주기 위해 우선순위 큐를 이용.
+    1) 우선순위 큐에 입력된 값을 저장.
+    2) 큐에서 가장 높은 값(= curr)을 하나 빼며 pq.pop(). 이후 배열(= arr)의 값과 일치하는 위치 i를 찾음.
+    3) 위치 i에 존재하는 사람과 시합할 사람을 탐색.
+    - 만약 i가 가장 왼쪽인 경우, 우측 사람과 대결
+    - 만약 i가 가장 오른쪽인 경우, 좌측 사람과 대결
+    - 만약 i의 양옆에 두 사람이 존재하는 경우, 두 사람 중 값이 더 큰 사람과 대결.
+    대결시킨 값을 ans에 저장시켜주며, i는 arr에서 제외시켜준다. (i번쨰 사람이 승리하여 토너먼트를 진행할 경우는 없음.)
+    4) 큐에 하나의 값(= 1)이 남을 때까지 2)를 반복하며, 하나의 값이 남을 시 ans 출력.
+    etc.)
+ */
+
+#include <iostream>
+#include <queue>
+
+using namespace std;
+#define FAST_IO ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
+
+#ifndef ONLINE_JUDGE
+#define CUSTOM
+#endif
+
+#define endl "\n"
+
+int main()
+{
+#ifdef CUSTOM
+    cout << "[CUSTOM]" << endl;
+#else // BOJ
+    FAST_IO;
+#endif
+
+    int n;
+    cin >> n;
+    vector<int> arr(n);
+    priority_queue<int> pq;
+    for (auto &elem : arr)
+        cin >> elem, pq.push(elem);
+
+    int ans = 0;
+    while (pq.size() != 1)
+    {
+        int curr = pq.top();
+        pq.pop();
+
+        int i = 0;
+        for (i = 0; i < arr.size(); i++)
+            if (arr[i] == curr) // i번째 사람이 가장 높은 순위를 가진 사람인 경우
+                break;
+
+        int gap = 0;
+        if (arr[i] == arr.front()) // 가장 왼쪽에 있을 경우 (= 시합할 사람이 오른쪽밖에 없음)
+            gap = abs(arr[i] - arr[i + 1]);
+        else if (arr[i] == arr.back())
+            gap = abs(arr[i - 1] - arr[i]); // 가장 오른쪽에 있을 경우 (= 시합할 사람이 왼쪽밖에 없음)
+        else
+            gap = abs(arr[i] - max(arr[i - 1], arr[i + 1])); // 양쪽의 사람 중 값이 큰 사람과 대결
+
+        ans += gap;
+        arr.erase(arr.begin() + i);
+    }
+
+    cout << ans;
+}
+
 // 1 1
 // ans: 0
 
