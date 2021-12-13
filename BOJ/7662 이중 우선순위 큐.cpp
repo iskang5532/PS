@@ -1,7 +1,7 @@
 // 7662 이중 우선순위 큐
 // 문제: https://www.acmicpc.net/problem/7662
 /*
-    sol.1) multiset (48,884KB, 740ms)
+    sol.1) multiset (49,016KB, 1,496ms)
     시간 복잡도: ? (입력 및 삭제: O(logN))
     풀이)
     - 멀티셋에 값을 저장한 후, 삭제 명령에 맞춰 값을 제거.
