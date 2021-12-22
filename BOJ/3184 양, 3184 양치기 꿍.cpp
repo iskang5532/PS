@@ -1,5 +1,5 @@
-// 3184 양
-// https://www.acmicpc.net/problem/3184
+// 3184 양, 3187 양치기 꿍
+// https://boj.kr/3184 https://boj.kr/3187
 /*
     BFS (2,088KB, 0ms)
     풀이)
@@ -10,7 +10,6 @@
     2) 영역에 대한 조사를 끝마친 경우, 구한 양의 수 혹은 늑대의 수를 비교하여 ans에 저장.
     3) 이후 나머지 칸들도 조사하여 ans를 구한 후, 출력.
  */
-
 #include <iostream>
 #include <queue>
 
@@ -23,8 +22,9 @@ using namespace std;
 
 #define endl "\n"
 #define MAX 250 + 1
-#define sheep first
-#define wolf second
+#define fence '#'
+#define wolf 'v'
+#define sheep 'o'
 typedef pair<int, int> pii;
 
 const int dx[4] = {0, 1, 0, -1}; // 상, 좌, 하, 우
@@ -42,14 +42,14 @@ pii bfs()
     pii ans = {0, 0}; // 아침까지 살아있는 양과 늑대의 수
     for (int row = 0; row < r; row++)
         for (int col = 0; col < c; col++)
-            if (visited[row][col] || board[row][col] == '#')
+            if (visited[row][col] || board[row][col] == fence)
                 continue;
             else
             {
                 int s = 0, w = 0;
-                if (board[row][col] == 'o')
+                if (board[row][col] == sheep)
                     s++;
-                else if (board[row][col] == 'v')
+                else if (board[row][col] == wolf)
                     w++;
 
                 queue<pii> q;
@@ -66,12 +66,12 @@ pii bfs()
 
                         if (!(0 <= ny && ny < r) || !(0 <= nx && nx < c)) // OOB
                             continue;
-                        if (visited[ny][nx] || board[ny][nx] == '#')
+                        if (visited[ny][nx] || board[ny][nx] == fence)
                             continue;
 
-                        if (board[ny][nx] == 'o')
+                        if (board[ny][nx] == sheep)
                             s++;
-                        else if (board[ny][nx] == 'v')
+                        else if (board[ny][nx] == wolf)
                             w++;
 
                         q.push({ny, nx});
@@ -79,7 +79,7 @@ pii bfs()
                     }
                 }
 
-                s > w ? ans.sheep += s : ans.wolf += w;
+                s > w ? ans.first += s : ans.second += w;
             }
 
     return ans;
@@ -99,5 +99,5 @@ int main()
             cin >> board[row][col];
 
     pii ans = bfs();
-    cout << ans.sheep << " " << ans.wolf;
+    cout << ans.first << " " << ans.second;
 }
