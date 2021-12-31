@@ -59,6 +59,7 @@ int main()
         string str;
         cin >> str;
 
+        // if (isValid(*istream_iterator<string>(cin))) // Defined in header <iterator>
         if (isValid(move(str)))
             ans++;
     }
