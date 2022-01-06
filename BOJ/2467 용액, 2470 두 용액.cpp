@@ -1,5 +1,5 @@
-// 2470 두 용액
-// https://www.acmicpc.net/problem/2470
+// 2467 용액, 2470 두 용액
+// https://boj.kr/2467 https://boj.kr/2470
 /*
     투 포인터 (2,288KB, 16ms)
     시간 복잡도: 최대 O(n)?
