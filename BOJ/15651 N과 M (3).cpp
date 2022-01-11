@@ -1,7 +1,54 @@
 // 15651 N과 M (3)
+// 중복순열(nΠm) 구하기. (n개의 수에서 중복을 허용해서 m개의 수를 고른 뒤 나열하는 모든 경우)
 // https://www.acmicpc.net/problem/15651
 /*
-    완전 탐색, 중복순열 (2,020KB, 396ms)
+    백트래킹 (2,020KB, 388ms)
+    시간 복잡도: ?
+    풀이)
+    - 재귀를 이용해 n개중 m개를 뽑는 경우를 모두 탐색.
+    - 수는 중복이 가능하므로, 재귀 시마다 선택할 수는 1부터 탐색.
+    - 선택한 수는 idx에 저장.
+    - 선택한 수의 개수가 m개가 되었을 경우, idx에 저장된 수를 출력.
+ */
+
+#include <iostream>
+
+using namespace std;
+#define FAST_IO ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
+
+#define endl "\n"
+#define MAX 7 + 1
+
+int n, m; // 1 ≤ M ≤ N ≤ 7
+int idx[MAX];
+
+void dfs(int len)
+{
+    if (len == m)
+    {
+        for (int i = 0; i < m; i++)
+            cout << idx[i] << ' ';
+        cout << endl;
+        return;
+    }
+
+    for (int i = 1; i <= n; i++)
+    {
+        idx[len] = i;
+        dfs(len + 1);
+    }
+}
+int main()
+{
+    FAST_IO;
+
+    cin >> n >> m;
+
+    dfs(0);
+}
+
+/*
+    완전 탐색 (2,020KB, 396ms)
     시간 복잡도: ?
     풀이)
     - 경우의 수 p를 구한 후, 0:p-1까지의 값 i을 이용해 r개를 선택함.

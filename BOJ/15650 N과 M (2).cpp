@@ -1,4 +1,5 @@
 // 15650 N과 M (2)
+// 조합(nCm) 구하기. (n개의 수에서 중복 없이 m개의 수를 골라서 만들 수 있는 조합)
 // https://www.acmicpc.net/problem/15650
 /*
     sol.1) 백트래킹 (2,020KB, 0ms)
@@ -6,13 +7,12 @@
     풀이)
     - 재귀를 통해 n개의 수 중 m개를 골라줌.
     단, 중복되는 수가 존재하면 안 되므로 이전에 선택한 수가 포함되지 않도록 한다.
-    즉, 선택할 수를 탐색할 때 이전에 고른 수의 다음 수부터 선택할 수 있게 한다.
+    즉, 수를 고를 때 이전에 고른 수의 다음 수부터 선택할 수 있게 한다.
     - 고른 수는 idx에 저장. (idx[i] = k일 시, i번째 고른 수는 k)
     - m개의 수를 골랐을 경우, 0부터 m-1까지 idx를 출력.
  */
 
 #include <iostream>
-#include <numeric> // iota
 
 using namespace std;
 #define FAST_IO ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
@@ -20,10 +20,10 @@ using namespace std;
 #define endl "\n"
 #define MAX 8 + 1
 
-int n, m;             // 1 ≤ M ≤ N ≤ 8
-int v[MAX], idx[MAX]; // idx[i] = k일 때, i번째로 고른 수는 k
+int n, m;     // 1 ≤ M ≤ N ≤ 8
+int idx[MAX]; // idx[i] = k일 때, i번째로 고른 수는 k
 
-void dfs(int pos, int len)
+void dfs(int k, int len)
 {
     if (len == m)
     {
@@ -33,9 +33,9 @@ void dfs(int pos, int len)
         return;
     }
 
-    for (int i = pos; i < n; i++)
+    for (int i = k; i <= n; i++)
     {
-        idx[len] = v[i];
+        idx[len] = i;
         dfs(i + 1, len + 1);
     }
 }
@@ -46,15 +46,13 @@ int main()
 
     cin >> n >> m;
 
-    iota(v, v + n, 1);
-
-    dfs(0, 0);
+    dfs(1, 0);
 }
+
 /*
     sol.2) 완전 탐색 (2,028KB, 0ms)
     시간 복잡도: ?
     풀이)
-    nCm 구하기. (n개의 수에서 중복 없이 m개의 수를 골라서 만들 수 있는 조합)
     1) n개의 비트를 이용하며, m개의 비트를 true로 만든 후 i번째 비트가 true일 시 v[i]의 값을 str에 저장함.
     2) str을 구했다면, ans에 저장함.
     3) next_permutation을 이용하여 선택할 m개의 수를 바꾸며, 1번 과정 반복

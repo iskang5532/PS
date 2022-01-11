@@ -1,4 +1,5 @@
 // 15649 N과 M (1)
+// 순열(nPm) 구하기. (n개의 수에서 중복 없이 m개의 수를 뽑아서 만들 수 있는 순열)
 // https://www.acmicpc.net/problem/15649
 /*
     sol.1) 백트래킹 (2,020KB, 20ms)
@@ -23,8 +24,8 @@ using namespace std;
 #define endl "\n"
 #define MAX 8 + 1
 
-int n, m; // 1 ≤ M ≤ N ≤ 8
-int v[MAX];
+int n, m;   // 1 ≤ M ≤ N ≤ 8
+int v[MAX]; // v[i] = k일 때, i번째로 고른 수는 k
 bool visited[MAX];
 
 void dfs(int dep)
@@ -61,7 +62,6 @@ int main()
     sol.2) 완전 탐색 (5,228KB, 28ms)
     시간 복잡도: ?
     풀이)
-    - nPm 구하기
     1) 벡터 v에 1부터 n까지의 수를 저장하며, bits에는 m만큼의 수를 사용할 수 있도록 m개의 1을 저장. (그 외의 값은 0)
     2) next_permutation을 이용하여 bits를 돌려줌.
     3) bits[i]가 true일 때, v[i]의 값을 가져와 str에 저장.
