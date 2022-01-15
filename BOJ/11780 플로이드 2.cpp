@@ -1,14 +1,14 @@
 // 11780 플로이드 2
-// https://www.acmicpc.net/problem/11780
+// https://www.acmicpc.net//problem/11780
 // https://puu.sh/IBHfM/116d314e31.png
 /*
     플로이드 와샬 (2,156KB, 32ms)
     시간 복잡도: O(V^3) (3중 for문)
     풀이)
-    - 플로이드 와샬로 구한 값을 arr에 저장.
-    - a to b에서 방문 지점을 구하기 위해 벡터 P를 선언.
-    P[a][b] = c일 때, a에서 b로 이동할 시 a 다음 위치는 c (c == b일 시, a 다음은 b)
-    - 플로이드 와샬 과정에서 경로 최솟값 갱신이 가능할 때, P값 또한 갱신시켜준다.
+    - 플로이드 와샬로 구한 모든 경로를 path에 저장.
+    - a에서 b로 갈 때 방문한 모든 지점을 저장할 P.
+    P[a][b] = c일 때, a에서 b로 이동할 시 a 다음 위치는 c. (만약 c == b면 a 다음은 b)
+    - 플로이드 와샬 수행 과정에서 경로의 비용 갱신이 가능할 시, P값 또한 갱신해준다.
     P[a][b] = P[a][mid]. 주의할 점은, P[a][b]에 mid값을 넣으면 안 됨.
     - 도시의 개수 및 경로 출력.
     경로는 P에 저장되어 파악할 수 있지만, 개수는 파악할 수 없음.
@@ -27,22 +27,22 @@ using namespace std;
 #define FAST_IO ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
 
 #define endl "\n"
-#define INF 2'100'000'000
+#define INF 987654321
 
 int n, m;    // 도시의 개수 n(1 ≤ n ≤ 100), 버스의 개수 m(1 ≤ m ≤ 100,000)
 int a, b, c; // 시작 도시 a, 도착 도시 b, 비용 c(1 ≤ c ≤ 100k)
 
-void print_ans(const vector<vector<int>> &arr, const vector<vector<int>> &P);
-void Floyd_Warshall(vector<vector<int>> &arr, vector<vector<int>> &P)
+void print_ans(const vector<vector<int>> &path, const vector<vector<int>> &P);
+void Floyd_Warshall(vector<vector<int>> &path, vector<vector<int>> &P)
 {
     for (int mid = 1; mid <= n; mid++) // 거쳐가는 지점
         for (int a = 1; a <= n; a++)
             for (int b = 1; b <= n; b++)
-                if (arr[a][mid] == INF && arr[mid][b] == INF) // 거쳐가야 하는 지점으로 갈 수 없는 경우
+                if (a == b) // a to a
                     continue;
-                else if (arr[a][mid] + arr[mid][b] < arr[a][b]) // 거쳐 가는 경우가 비용이 덜 드는 경우 (= 갱신)
+                else if (path[a][mid] + path[mid][b] < path[a][b]) // 거쳐 가는 경우가 비용이 덜 드는 경우 (= 갱신)
                 {
-                    arr[a][b] = arr[a][mid] + arr[mid][b];
+                    path[a][b] = path[a][mid] + path[mid][b];
                     P[a][b] = P[a][mid]; // a에서 b로 가기 위한 a 다음 위치
                 }
 }
@@ -53,37 +53,35 @@ int main()
 
     cin >> n >> m;
 
-    vector<vector<int>> arr(n + 1, vector<int>(n + 1, INF)); // arr[a][b] = c일 때, a에서 b로 가는 비용은 c
-    vector<vector<int>> P(n + 1, vector<int>(n + 1));        // P[a][b] = c일 때, a에서 b로 이동할 시 a 다음 위치는 c (c == b일 시, a 다음은 b)
-    for (int i = 1; i <= n; i++)
-        arr[i][i] = 0; // 본인에게 가는 거리는 0
+    vector<vector<int>> path(n + 1, vector<int>(n + 1, INF)); // path[a][b] = c일 때, a에서 b로 가는 비용은 c
+    vector<vector<int>> P(n + 1, vector<int>(n + 1));         // P[a][b] = c일 때, a에서 b로 이동할 시 a 다음 위치는 c (c == b일 시, a 다음은 b)
 
     for (int i = 0; i < m; i++)
     {
         cin >> a >> b >> c;
-        if (c < arr[a][b]) // 입력값이 기존값보다 작은 경우 (= 갱신이 필요한 경우)
+        if (c < path[a][b]) // 입력값이 기존값보다 작은 경우 (= 갱신이 필요한 경우)
         {
-            arr[a][b] = c;
+            path[a][b] = c;
             P[a][b] = b; // a to b의 기본값은 b (이 시점에서는 중간에 거쳐가는 지점은 없음)
         }
     }
 
-    Floyd_Warshall(arr, P);
+    Floyd_Warshall(path, P);
 
-    print_ans(arr, P);
+    print_ans(path, P);
 }
 
-void print_ans(const vector<vector<int>> &arr, const vector<vector<int>> &P)
+void print_ans(const vector<vector<int>> &path, const vector<vector<int>> &P)
 {
     // 도시 a에서 b로 가는데 필요한 최소 비용
     for (int a = 1; a <= n; a++, cout << endl)
         for (int b = 1; b <= n; b++)
-            arr[a][b] == INF ? cout << '0' << ' ' : cout << arr[a][b] << ' ';
+            path[a][b] == INF ? cout << '0' << ' ' : cout << path[a][b] << ' ';
 
     // 도시 a에서 b로 최소 비용으로 가면서 포함한 도시의 개수와 도시의 경로
     for (int st = 1; st <= n; st++)
         for (int ed = 1; ed <= n; ed++)
-            if (st == ed || arr[st][ed] == INF) // 자기 자신에게 or 길이 없는 경우
+            if (st == ed || path[st][ed] == INF) // 자기 자신에게 or 길이 없는 경우
                 cout << '0' << endl;
             else
             {
@@ -107,7 +105,7 @@ void print_ans(const vector<vector<int>> &arr, const vector<vector<int>> &P)
 // 람다 재귀식: https://blog.naver.com/jinhan814/222201778180
 // 2,024KB, 92ms
 // {
-//     if (c < arr[a][b])
+//     if (c < path[a][b])
 //         P[a][b] = P[mid][b]; // a에서 b로 가기 위한 a 다음 위치
 // }
 // {
