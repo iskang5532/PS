@@ -33,7 +33,7 @@ struct Union_Find
     Union_Find() { iota(parent, parent + MAX, 0); }
 
     int find_parent(int x) { return x == parent[x] ? x : parent[x] = find_parent(parent[x]); }
-    void union_parent(int a, int b) { a < b ? parent[a] = b : parent[b] = a; } // 더 작은 값이 부모가 되도록
+    void union_parent(int a, int b) { a > b ? parent[a] = b : parent[b] = a; } // 더 작은 값이 부모가 되도록
 };
 
 int main()

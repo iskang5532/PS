@@ -1,8 +1,8 @@
+// 2457 공주님의 정원
+// https://www.acmicpc.net/problem/2457
 /*
-    2457 공주님의 정원
-    그리디, 구현 (KB, ms)
+    그리디, 구현 (5,220KB, 44ms)
     시간 복잡도: ?
-    문제: https://www.acmicpc.net/problem/2457
     풀이)
     - 1번 조건) 공주가 가장 좋아하는 계절인 3월 1일부터 11월 30일까지 매일 꽃이 한 가지 이상 피어 있도록 한다.
     - 2번 조건) 정원이 넓지 않으므로 정원에 심는 꽃들의 수를 가능한 한 적게 한다.
@@ -22,17 +22,11 @@
 using namespace std;
 #define FAST_IO ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
 
-#ifndef ONLINE_JUDGE
-#define CUSTOM
-#endif
-
-#define endl "\n"
-
 struct pii
 {
     int m, d; // 꽃의 정보 (m월 d일)
 
-    friend bool operator<=(const pii &p1, const pii &p2) { return p1.m == p2.m ? p1.d <= p2.d : p1.m <= p2.m; }
+    friend bool operator<=(const pii &p1, const pii &p2) { return p1.m != p2.m ? p1.m <= p2.m : p1.d <= p2.d; }
     friend bool operator==(const pii &p1, const pii &p2) { return p1.m == p2.m && p1.d == p2.d; }
 };
 
@@ -41,25 +35,17 @@ struct Flower
     pii s, e; // 꽃이 피는 날짜 s, 꽃이 지는 날짜 e
 };
 
-pii _max(const pii &p1, const pii &p2) // 날짜가 더 큰 값을 반환
-{
-    if (p1.m == p2.m)
-        return p1.d >= p2.d ? p1 : p2;
-    else
-        return p1.m > p2.m ? p1 : p2;
-}
+// 날짜가 더 큰 값을 반환
+pii _max(const pii &p1, const pii &p2) { return p1.m != p2.m ? (p1.m > p2.m ? p1 : p2) : (p1.d >= p2.d ? p1 : p2); }
+
 struct s_greater // 꽃이 피는 날짜를 기준으로 오름차순 정렬
 {
-    bool operator()(const Flower &p1, const Flower &p2) { return p1.s.m == p2.s.m ? p1.s.d > p2.s.d : p1.s.m > p2.s.m; }
+    bool operator()(const Flower &p1, const Flower &p2) { return p1.s.m != p2.s.m ? p1.s.m > p2.s.m : p1.s.d > p2.s.d; }
 };
 
 int main()
 {
-#ifdef CUSTOM
-    cout << "[CUSTOM]" << endl;
-#else // BOJ
     FAST_IO;
-#endif
 
     int n;
     cin >> n;

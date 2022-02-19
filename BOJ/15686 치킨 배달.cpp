@@ -1,61 +1,70 @@
-/* 
- * 15686 치킨 배달
- * brute-force
- * 시간 복잡도: ?
- * 문제: https://www.acmicpc.net/problem/15686
- * etc.) 복잡해 보이지만 딱 맞게 풀려서 기분이 좋았던 문제.
+// 15686 치킨 배달
+// https://www.acmicpc.net/problem/15686
+/*
+    구현 (2,024KB, 4ms)
+    시간 복잡도: ?
+    풀이)
+    etc.)
+    참고)
  */
 
 #include <iostream>
 #include <vector>
-#include <algorithm> // next_permutation
+#include <algorithm> // permutation
 #include <numeric>   // accumulate
 
 using namespace std;
+#define FAST_IO ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
+#define INF 98754321
+#define MAX_N 50 + 1
+using pii = pair<int, int>;
 
-#define endl "\n"
-#define INF 987654321
-typedef pair<int, int> pii;
+vector<pii> h, ch; // 집의 위치 h, 치킨집 위치 ch
+vector<int> dist;  // dist[i] = k일 떄, i번째 집의 최소 치킨 거리는 k
+
+void get_dist(int cur) // 현재 치킨집과의 거리를 구함
+{
+    auto [y1, x1] = ch[cur];
+    for (int i = 0; i < h.size(); i++) // i번쨰 집
+    {
+        const auto &[y2, x2] = h[i];
+        int l = abs(y1 - y2) + abs(x1 - x2); // h[i] to ch[cur]의 치킨 거리
+
+        dist[i] = min(dist[i], l);
+    }
+}
 
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL), cout.tie(NULL);
+    FAST_IO;
 
-    int n, m; // 도시의 크기 (2 <= n <= 50), 치킨집의 개수 (1 <= m <= 13)
+    int n, m; // 크기 n(2 ≤ N ≤ 50), 치킨집의 개수 M(1 ≤ M ≤ 13)
     cin >> n >> m;
-
-    vector<pii> H, C; // 집의 위치, 치킨집의 위치
-    for (int col = 0; col < n; col++)
-        for (int row = 0; row < n; row++)
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
         {
             int k;
             cin >> k;
-            if (k == 1) // 집
-                H.push_back(pii{col, row});
-            else if (k == 2) // 치킨집
-                C.push_back(pii{col, row});
+            if (k == 1)
+                h.push_back({i, j});
+            else if (k == 2)
+                ch.push_back({i, j});
         }
 
-    int ans = INF;                  // 치킨 거리의 최솟값
-    vector<bool> P(C.size(), true); // 사용할 치킨집 (false 경우) ex.) 001일 경우, [0], [1] 사용하며 [2] 폐업
-    fill(P.begin(), P.begin() + m, false);
+    vector<bool> check(ch.size(), false); // check[i] = true일 때, i번째 치킨집은 사용하는 치킨집
+    fill(check.begin(), check.begin() + m, true);
+
+    int ans = INF;
+    dist.resize(h.size());
     do
     {
-        vector<int> dist(H.size(), INF);   // dist[i]는 i번째 집의 최소 치킨 거리
-        for (int i = 0; i < P.size(); i++) // i번쨰 치킨집의 위치
-            if (!P[i])
-            {
-                const auto [y, x] = C[i];
-                for (int j = 0; j < H.size(); j++) // j번째 집
-                {
-                    const auto [col, row] = H[j];
-                    dist[j] = min(dist[j], abs(y - col) + abs(x - row));
-                }
-            }
+        fill(dist.begin(), dist.end(), INF);
+        for (int i = 0; i < check.size(); i++)
+            if (check[i]) // i번쨰 치킨집은 사용하는 치킨집인가
+                get_dist(i);
 
         ans = min(ans, accumulate(dist.begin(), dist.end(), 0));
-    } while (next_permutation(P.begin(), P.end()));
+    } while (prev_permutation(check.begin(), check.end()));
 
     cout << ans;
 }
