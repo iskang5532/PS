@@ -2,7 +2,7 @@
 // https://boj.kr/1890 https://boj.kr/4620
 // TC: https://www.cs.helsinki.fi/group/boi2006/ (Day 2 - Jump)
 /*
-    DP (2,020KB, 0ms)
+    sol.1) DP (2,020KB, 0ms)
     시간 복잡도: O(n^2)
     풀이)
     - 현재 탐색 중인 위치에서 이동할 수 있는 다음 위치는 우측과 하단뿐이며, 이전에 왔던 곳으로 돌아갈 수 없다.

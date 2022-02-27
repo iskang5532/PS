@@ -1,5 +1,5 @@
 // 1647 도시 분할 계획
-// https://www.acmicpc.net/problem/
+// https://www.acmicpc.net/problem/1647
 /*
     MST, 크루스칼 알고리즘 (14,012KB, 308ms)
     시간 복잡도: ?
@@ -45,7 +45,7 @@ int main()
 {
     FAST_IO;
 
-    int n, m; // 집의 개수 N(2 ≤ n ≤ 100,000), 길의 개수 M(d1 ≤ m ≤ 1,000,000)
+    int n, m; // 집의 개수 N(2 ≤ n ≤ 100,000), 길의 개수 M(1 ≤ m ≤ 1,000,000)
     cin >> n >> m;
     vector<P> v(m);
     for (auto &[a, b, c] : v)
