@@ -1,96 +1,104 @@
+// 1744 수 묶기
+// https://www.acmicpc.net/problem/1744
 /*
-    1744 수 묶기
-    (2,024KB, 0ms)
+    sol.1) 그리디 (2,024KB, 0ms)
     시간 복잡도: ?
-    문제: https://www.acmicpc.net/problem/1744
-    etc.) 예외처리에 신경을 많이 써야 했던 문제.
-    - 입력된 값을 1을 기준으로 나눴으며, k >= 1인 경우 v1, k < 1인 경우 v2에 저장.
-    - 양수인 경우 내림차순으로 정렬을 하였으며, 1 이외의 값 두 개를 묶어 서로 곱해줌.
-    만약 값이 1이 나온 경우, 그 이후의 값은 모두 1이기 때문에 현재 값 1과 남아 있는 1을 모두 더해줌 (곱해주지 않음)
-    - 음수인 경우 오름차순으로 정렬을 하였으며, 값 두개를 묶어 서로 곱해줌. (음수와 음수가 곱해질 경우 양수이며 0과 곱해질 경우 0)
-    최적화를 위해 0이 나온 경우 더 이상의 연산은 의미가 없기 때문에 반복문을 종료시킬 수 있음.
-    - 신경써야 할 점.
-     - 1의 경우 곱셈보다 덧셈이 더 높음.
-     - 음수끼리 곱을 이용해 양수로 만들 수 있음.
+    풀이)
+    - 입력된 수는 위치에 상관없이 묶을 수 있다. 그러므로, 양수와 음수로 나눠 값을 구해준다.  (0은 음수쪽에 넣어 홀수개일 때 유용하게 사용해준다.)
+    1. 값을 입력받으며, 값이 양수일 경우 l, 0 혹은 음수일 경우 r에 넣는다.
+    l과 r은 우선순위 큐이며, l은 내림차순 정렬, r은 오름차순 정렬이다.
+    2. 큐에 존재하는 값으로 만들 수 있는 최댓값을 만든다.
+     2-1. l일 경우
+     - 둘 중 하나의 값이 1일 경우, 두 값을 곱하는 것보다 더해주는 것이 더 높은 값을 얻을 수 있다.
+     - 그 외는 두 수를 서로 곱해준다.
+     2-2. r일 경우
+     - 음수 혹은 0이므로, 두 수를 곱하는 것이 더 높은 값을 얻을 수 있다.
+    - 만약 큐에 존재하는 값이 하나일 경우, 그냥 더해준다.
  */
 
 #include <iostream>
-#include <vector>
-#include <algorithm>
-#include <numeric>
+#include <queue>
 
 using namespace std;
-
-#ifndef ONLINE_JUDGE
-#define CUSTOM
-#endif
-
 #define FAST_IO ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
-#define endl "\n"
+#define MAX 53
 
-int get_result(const vector<int> &v, const bool flag) // 곱셈을 이용한 최댓값 구하기
+template <typename T>
+int get_ans(priority_queue<int, vector<int>, T> &pq)
 {
     int ret = 0;
-
-    int prev = v.front();
-    for (int i = 1; i < v.size(); i++) // 두 번째 값부터 (v.size >= 2)
+    int a, b;
+    while (pq.size() >= 2)
     {
-        int curr = v[i];
-        if (flag && curr == 1)
-        {
-            ret += v.size() - i;
-            break;
-        }
-        // else if (!flag && curr == 0) // 현재 값이 0인 경우, 탈출 (더 이상의 연산이 필요 없기 때문)
-        //     return ret;
+        a = pq.top(), pq.pop();
+        b = pq.top(), pq.pop();
 
-        if (i & 1) // 현재 값이 두 번째일 경우 (x o x o..)
-            ret += prev * curr, prev = 0;
-        else // 현재 값이 첫 번째일 경우
-            prev = curr;
+        if (a == 1 || b == 1) // 둘 중 하나의 값이 1일 경우, 두 값을 곱하기보다 더해주는 것이 더 높음
+            ret += a + b;
+        else
+            ret += a * b;
     }
-
-    ret += prev; // 남아 있는 이전값 더하기 (n % 1일 경우 값이 남아 있으며, !(n % 1)일 경우 값은 0)
+    if (pq.size())
+        ret += pq.top();
 
     return ret;
 }
 
 int main()
 {
-#ifdef CUSTOM
-    cout << "[CUSTOM]" << endl;
-#else // BOJ
     FAST_IO;
-#endif
 
-    int n; // 수열의 크기 (1 <= 10k)
+    int n; // 수열의 크기 (1 ≤ n ≤ 50)
     cin >> n;
-    vector<int> v1, v2; // v1은 0을 포함한 양수, v2는 음수 (-10k <= 10k)
-    if (n == 1)
-    {
-        int k;
-        cin >> k, cout << k;
-        return 0;
-    }
+    priority_queue<int> l; // -1,000 ≤ vi ≤ 1,000
+    priority_queue<int, vector<int>, greater<int>> r;
+    for (int i = 0, x; i < n; i++)
+        cin >> x, x >= 1 ? l.push(x) : r.push(x);
+
+    int ans = get_ans(l) + get_ans(r);
+    cout << ans;
+}
+
+/*
+    sol.2) DP (2,020KB, 0ms)
+    시간 복잡도: ?
+    풀이)
+    - DP[i] = k일 때, v[i]까지의 값을 이용해 만들 수 있는 최댓값은 k.
+    - 탐색중인 i번쨰 수를 어떻게 이용하면 더 높은 값을 얻을 수 있는지를 판단.
+    곱할 경우, v[i-1] 값과 곱해줘야 하므로 dp[i-2]번째 값을 이용해줘야 한다.
+    더할 경우, v[i]를 이전까지의 최댓값인 dp[i-1]에 더해주면 된다.
+    위 두 가지 방법을 이용해 dp[i]의 최댓값을 구한다.
+    etc.) 2579 계단 오르기(https://boj.kr/2579) 문제와 비슷한듯
+    참고)
+    - DP 풀이 방법: https://blog.naver.com/jinhan814/222609762108
+ */
+
+#include <iostream>
+#include <algorithm> // sort
+
+using namespace std;
+#define FAST_IO ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
+#define MAX 53
+
+int main()
+{
+    FAST_IO;
+
+    int n;
+    cin >> n;
+    int v[MAX];
     for (int i = 0; i < n; i++)
-    {
-        int k;
-        cin >> k;
-        if (k >= 1)
-            v1.push_back(k);
-        else
-            v2.push_back(k);
-    }
-    sort(v1.begin(), v1.end(), greater<int>()); // 내림차
-    sort(v2.begin(), v2.end());                 // 오름차
+        cin >> v[i];
 
-    int l = 0, r = 0;
-    if (!v1.empty())
-        l = get_result(v1, true);
-    if (!v2.empty())
-        r = get_result(v2, false);
+    sort(v, v + n);
 
-    cout << l + r;
+    int dp[MAX]; // dp[i] = k일 때, v[i]까지의 값을 이용해 만들 수 있는 최댓값은 k
+    dp[0] = v[0];
+    dp[1] = max(dp[0] + v[1], v[0] * v[1]);
+    for (int i = 2; i < n; i++)
+        dp[i] = max(dp[i - 1] + v[i], dp[i - 2] + (v[i - 1] * v[i])); // i번쨰 값을 그대로 더해줄 것인가? 혹은 i-1번째 값과 곱해줄 것인가?
+
+    cout << dp[n - 1];
 }
 
 // 5 -5 -3 -2 0 0
@@ -99,6 +107,10 @@ int main()
 // 4%
 // 2 -1 -1
 // ans: 1
+
+// 26%
+// 3 2 1 -1
+// 2
 
 // 31%
 // 4 1 1 1 1

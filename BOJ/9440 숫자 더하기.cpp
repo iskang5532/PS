@@ -1,7 +1,7 @@
 // 9440 숫자 더하기
 // https://www.acmicpc.net/problem/9440
 /*
-    그리디 (2,024KB, 0ms)
+    sol.1) 그리디 (2,024KB, 0ms)
     시간 복잡도: ?
     풀이)
     - 나눠진 두 값 l과 r이 작은 값이 되어야 한다.
@@ -30,12 +30,13 @@ using namespace std;
 
 void func(vector<int> &v)
 {
-    int pos = 0; // 0이 아닌 값의 시작 위치
-    while (v[pos] == 0)
+    int pos = 0;
+    while (v[pos] == 0) // 0이 아닌 값의 위치를 탐색
         pos++;
 
-    swap(v[0], v[pos]);
-    if (v.size() > 3)
+    swap(v[0], v[pos]); // 0과 0이 아닌 값 스왑
+
+    if (v.size() > 3) // 0이 2개 이상일 경우 (= 두 번째 값도 스왑해야 함)
         swap(v[1], v[pos + 1]);
 }
 
@@ -69,7 +70,7 @@ int main()
 }
 
 /*
-    완전 탐색 (2,024KB, 16ms)
+    sol.2) 완전 탐색 (2,024KB, 16ms)
     시간 복잡도: O(n^2)
     풀이)
     - 나눠진 두 값 l과 r이 작은 값이 되어야 한다.

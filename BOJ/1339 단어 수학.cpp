@@ -1,4 +1,70 @@
+// 22-03-02
+// 1339 단어 수학
+// https://www.acmicpc.net/problem/1339
 /*
+    그리디 (2,020KB, 0ms)
+    시간 복잡도: ?
+    풀이)
+    - 해당 문자의 자릿수에 맞춰 10의 거듭제곱을 cnt에 저장함.
+    이후 cnt를 내림차순 정렬 후에 가장 큰 값에 9부터 값을 할당한 후, 총 합을 출력.
+    참고)
+    - 이론: https://blog.naver.com/jinhan814/222609762108
+ */
+
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+#define FAST_IO ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
+
+int main()
+{
+    FAST_IO;
+
+    int n; // 단어의 개수 (1 ≤ N ≤ 10)
+    cin >> n;
+
+    int cnt[26]; // cnt[c] = k일 떄, 문자 c의 우선도는 k (k가 높을수록 다른 문자에 비해 높은 값을 받을 수 있음)
+    fill(cnt, cnt + 26, 0);
+    while (n--)
+    {
+        string s;
+        cin >> s;
+        reverse(s.begin(), s.end()); // 1의 자리부터 10의 거듭제곱 값을 부여
+        for (int i = 0, l = 1; i < s.length(); i++)
+            cnt[s[i] - 'A'] += l, l *= 10;
+    }
+
+    sort(cnt, cnt + 26, [&](int a, int b)
+         { return a > b; }); // 내림차순 정렬
+
+    int ans = 0;
+    for (int i = 0; i < 10; i++) // 10개의 문자에 값을 부여
+        ans += cnt[i] * (9 - i);
+
+    cout << ans;
+}
+
+// 3
+// ABB
+// BAA
+// BAA
+// ans: 2875
+
+// 10
+// ABB
+// BB
+// BB
+// BB
+// BB
+// BB
+// BB
+// BB
+// BB
+// BB
+// ans: 1790
+
+/* 21-10-24
     1339 단어 수학
     그리디, 맵 (2,032KB, 0ms)
     시간 복잡도: ?
@@ -78,24 +144,3 @@ int main()
         ans += to_num(str);
     cout << ans;
 }
-
-// input:
-// 3
-// ABB
-// BAA
-// BAA
-// ans: 2875
-
-// input:
-// 10
-// ABB
-// BB
-// BB
-// BB
-// BB
-// BB
-// BB
-// BB
-// BB
-// BB
-// ans: 1790

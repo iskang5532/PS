@@ -1,5 +1,5 @@
 // 24498 blobnom
-// https://www.acmicpc.net/problem/2449
+// https://www.acmicpc.net/problem/24498
 /*
     그리디 (5,804KB, 136ms)
     시간 복잡도: ?
