@@ -1,9 +1,8 @@
-// sol.1) 구현
+// 11723 집합
+// 문제: https://www.acmicpc.net/problem/11723
 /*
-    11723 집합
-    구현 (2,392KB, 760ms)
+    sol.1) 구현 (2,392KB, 760ms)
     시간 복잡도: ?
-    문제: https://www.acmicpc.net/problem/11723
     풀이)
     - visited 배열을 이용해 집합에 값의 존재 여부를 저장. (visited[3] = true일 경우, 3은 집합에 존재)
     - all 혹은 empty와 같이 visited 배열을 초기화해주는 명령은 나중으로 미룸. (= 시간 초과 방지; 입력되는 명령이 연속적으로 empty or all일 수 있기 때문)
@@ -15,11 +14,6 @@
 
 using namespace std;
 #define FAST_IO ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
-
-#ifndef ONLINE_JUDGE
-#define CUSTOM
-#endif
-
 #define endl "\n"
 #define MAX 20 + 1
 
@@ -27,7 +21,7 @@ int main()
 {
     FAST_IO;
 
-    int n; // M (1 ≤ M ≤ 3,000,000)
+    int n; // 1 ≤ n ≤ 3,000,000
     cin >> n;
 
     bool visited[MAX];
@@ -61,29 +55,67 @@ int main()
     }
 }
 
-// sol.2) 비트셋
-// 비트셋 (2,024KB, 624ms)
-// 참고)
-// - 비트셋에 대해: https://www.crocus.co.kr/549
-//                 https://blog.naver.com/jinhan814/222536104201
+/*
+    sol.2) 비트마스킹 (2,024KB, 708ms)
+    시간 복잡도: ?
+    풀이)
+    입력된 값 x가 20 이하의 값이므로, 비트마스크를 이용해 x를 비트로 바꾼 값을 b에 저장하는 식으로 풀이.
+ */
 
 #include <iostream>
-#include <bitset> // bit
 
 using namespace std;
 #define FAST_IO ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
-
-#ifndef ONLINE_JUDGE
-#define CUSTOM
-#endif
-
 #define endl "\n"
 
 int main()
 {
     FAST_IO;
 
-    int n; // M (1 ≤ M ≤ 3,000,000)
+    int n; // 1 ≤ n ≤ 3,000,000
+    cin >> n;
+
+    int b = 0;
+    while (n--)
+    {
+        string cmd;
+        cin >> cmd;
+        int x; // 1 ≤ x ≤ 20
+
+        if (cmd == "add")
+            cin >> x, b |= 1 << x;
+        else if (cmd == "remove")
+            cin >> x, b &= ~(1 << x);
+        else if (cmd == "check")
+            cin >> x, cout << bool(b & 1 << x) << endl;
+        else if (cmd == "toggle")
+            cin >> x, b ^= 1 << x;
+        else if (cmd == "all")
+            b = -1;
+        else // empty
+            b = 0;
+    }
+}
+
+/*
+    sol.3) 비트셋 (2,024KB, 624ms)
+    참고)
+    - 비트셋: https://www.crocus.co.kr/549
+            https://blog.naver.com/jinhan814/222536104201
+*/
+
+#include <iostream>
+#include <bitset> // bit
+
+using namespace std;
+#define FAST_IO ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
+#define endl "\n"
+
+int main()
+{
+    FAST_IO;
+
+    int n; // 1 ≤ n ≤ 3,000,000
     cin >> n;
 
     bitset<20> bit(0);
