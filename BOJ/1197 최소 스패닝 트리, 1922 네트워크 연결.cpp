@@ -13,13 +13,12 @@
  */
 
 #include <iostream>
-#include <vector>
 #include <algorithm> // sort
 #include <numeric>   // iota
 
 using namespace std;
 #define FAST_IO ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
-#define MAX 10000 + 1 // 정점의 최대 개수
+#define MAX 10'003
 
 struct P
 {
@@ -34,7 +33,7 @@ struct Union_Find
 
     int find_parent(int x) { return x == parent[x] ? x : parent[x] = find_parent(parent[x]); }
     void union_parent(int a, int b) { a > b ? parent[a] = b : parent[b] = a; } // 더 작은 값이 부모가 되도록
-};
+} uf;
 
 int main()
 {
@@ -43,19 +42,18 @@ int main()
     int V, E;
     cin >> V >> E;
 
-    vector<P> v;
+    P v[100'003];
     for (int i = 0; i < E; i++)
     {
         int a, b, c;
         cin >> a >> b >> c;
         if (a != b)
-            v.push_back({a, b, c});
+            v[i] = {a, b, c};
     }
-    sort(v.begin(), v.end()); // 가중치를 기준으로 오름차순 정렬
+    sort(v, v + E); // 가중치를 기준으로 오름차순 정렬
 
     int ans = 0;
-    Union_Find uf;
-    for (int i = 0; i < v.size(); i++)
+    for (int i = 0; i < E; i++)
     {
         auto [a, b, c] = v[i];
         a = uf.find_parent(a), b = uf.find_parent(b);
