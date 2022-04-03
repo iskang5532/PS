@@ -1,5 +1,5 @@
-// 1251 단어 나누기
-// https://www.acmicpc.net/problem/1251
+// 1251 단어 나누기, 2993 세 부분
+// https://boj.kr/1251 https://boj.kr/2993
 /*
     구현, 문자열 (2,024KB, 0ms)
     시간 복잡도: ?
