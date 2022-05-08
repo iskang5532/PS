@@ -1,86 +1,70 @@
-/* 
- * 2580 스도쿠
- * backtracking
- * 시간 복잡도: ?
- * 문제: https://www.acmicpc.net/problem/2580
- * etc.) 값이 포함된 사각형 내 숫자를 판별하는 방법이 까다로웠음.
- * 추가로, 100ms 미만이 나온 코드를 봐도 이해가 잘 안돼서 아쉬움..
+// 2022-05-02
+// 2239 스도쿠, 2580 스도쿠
+// https://boj.kr/2239 https://boj.kr/2580
+/*
+    구현, DFS (2,020KB, 308ms)
+    시간 복잡도: ?
+    풀이)
+    - dfs를 이용하여 빈 칸에 들어가는 수를 탐색.
+    - 해당 위치가 포함된 행와 열, 그리고 3*3칸을 탐색해준 후, 값이 들어갈 수 있을 경우 다음 빈 칸을 탐색.
  */
 
 #include <iostream>
 #include <vector>
 
 using namespace std;
-
+#define FAST_IO ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
+using pii = pair<int, int>;
 #define endl "\n"
-#define MAX 9 // 스도쿠의 크기
-typedef pair<int, int> pii;
+#define MAX 9
 
-int sudoku[MAX][MAX]; // 빈 칸 포함된 입력 및 채워질 스도쿠
-vector<pii> z;        // 빈 칸의 위치
-bool sw = false;      // 스도쿠가 채워졌는지의 여부
+char board[MAX][MAX];
+vector<pii> v; // 0의 위치를 저장
 
-bool isValid(const int col, const int row, const int k) // (col, row)위치에 k값이 적합한지 판단
+void dfs(int dep)
 {
-    for (int i = 0; i < MAX; i++)
-        if (sudoku[col][i] == k || sudoku[i][row] == k) // 가로 세로
-            return false;
+    auto [y, x] = v[dep];
 
-    int dy = col / 3, // 적합한 사각형까지의 y
-        dx = row / 3; // 적합한 사각형까지의 x
-    for (int y = 0 + (3 * dy); y < 3 + (3 * dy); y++) // 포함될 사각형 내
-        for (int x = 0 + (3 * dx); x < 3 + (3 * dx); x++)
-            if (sudoku[y][x] == k)
-                return false;
-
-    return true;
-}
-
-void dfs(const vector<pii>::iterator &itr = z.begin())
-{
-    if (itr == z.end()) // 빈 칸을 모두 사용한 경우 (= 스도쿠를 모두 채움)
+    if (dep == v.size())
     {
-        sw = true; // 반복문을 빠져나갈 수 있도록 만들어줄 트리거
-        return;
+        for (int i = 0; i < MAX; i++, cout << endl)
+            for (int j = 0; j < MAX; j++)
+                cout << board[i][j];
+        exit(0);
     }
 
-    for (int k = 1; k <= 9; k++) // 빈 칸 (col, row)에 들어갈 값 k
+    for (int k = '1'; k <= '9'; k++)
     {
-        auto [col, row] = *itr;
-        if (isValid(col, row, k)) // (col, row)에 k가 들어가도 괜찮은지
-        {
-            sudoku[col][row] = k; // 빈 칸에 k를 넣음
-            dfs(itr + 1);         // 다음 빈칸을 탐색
+        bool valid = true; // 위치 (y, x)에 값 k가 들어갈 수 있는가
+        for (int pos = 0; pos < MAX && valid; pos++)
+            if (board[pos][x] == k || board[y][pos] == k)
+                valid = false;
 
-            if (sw == true) // 만약 빈 칸이 모두 채워진 경우
-                return;
-            sudoku[col][row] = 0; // 현재 k값은 아니었기 때문에 다시 빈 칸으로
-        }
+        for (int ny = y / 3 * 3; ny < y / 3 * 3 + 3 && valid; ny++)
+            for (int nx = x / 3 * 3; nx < x / 3 * 3 + 3 && valid; nx++)
+                if (board[ny][nx] == k)
+                    valid = false;
+
+        if (!valid)
+            continue;
+
+        board[y][x] = k;
+        dfs(dep + 1);
+        // board[y][x] = '0';
     }
 }
 
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL), cout.tie(NULL);
+    FAST_IO;
 
-    for (int col = 0; col < MAX; col++)
-        for (int row = 0; row < MAX; row++)
+    for (int i = 0; i < MAX; i++)
+        for (int j = 0; j < MAX; j++)
         {
-            int k;
-            cin >> k; // 1 <= 9
-            sudoku[col][row] = k;
-
-            if (k == 0) // 빈 칸일 경우
-                z.push_back(pii{col, row}); // 빈 칸의 위치를 저장
+            cin >> board[i][j];
+            if (board[i][j] == '0')
+                v.push_back({i, j});
         }
 
-    dfs(); // 스도쿠를 모두 채움
-
-    for (int col = 0; col < MAX; col++) // print
-    {
-        for (int row = 0; row < MAX; row++)
-            cout << sudoku[col][row] << " ";
-        cout << endl;
-    }
+    dfs(0);
 }
