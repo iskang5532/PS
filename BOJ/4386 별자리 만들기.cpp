@@ -51,7 +51,7 @@ int main()
     for (auto &[a, b] : v)
         cin >> a >> b;
 
-    vector<P> v2; // v2[i] = {a, b, c}일 때, a에서 b까지의 거리는 c (i번쨰로 거리가 짧음)
+    vector<P> v2; // v2[i] = {a, b, c}일 때, a에서 b까지의 거리는 c (i번째로 거리가 짧음)
     for (int i = 0; i < n - 1; i++)
         for (int j = i + 1; j < n; j++) // 좌표 i와 좌표 j의 거리 구하기
         {

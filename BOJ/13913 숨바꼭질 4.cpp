@@ -1,4 +1,4 @@
-/* 
+/*
  * 13913 숨바꼭질 4
  * BFS, backtrace
  * 시간 복잡도: ?
@@ -36,7 +36,7 @@ void BFS(const int start, const int end)
         const int calc[3] = {1, -1, curr_pos}; // 세 가지 연산
         for (int i = 0; i < 3; i++)
         {
-            int next_pos = curr_pos + calc[i]; // 다음 위치는 i번쨰 연산을 통한 위치
+            int next_pos = curr_pos + calc[i]; // 다음 위치는 i번째 연산을 통한 위치
 
             if (!(0 <= next_pos && next_pos <= MAX) || visited[next_pos].cnt != 0) // 만약 정해진 위치를 벗어났거나, 이미 탐색한 장소일 경우 다음 위치를 탐색 (이미 탐색한 곳을 재탐색할 경우, 무한 루프)
                 continue;

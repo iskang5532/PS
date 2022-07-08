@@ -1,4 +1,4 @@
-/* 
+/*
  * 16936 나3곱2
  * DFS
  * 시간 복잡도: ?
@@ -30,7 +30,7 @@ void dfs(const vector<ll> &arr)
 
     for (int i = 0; i < n; i++) // 두 번째부터 올 값
     {
-        if (visited[i]) // 만약 i번쨰 원소를 사용한 적이 있는 경우
+        if (visited[i]) // 만약 i번째 원소를 사용한 적이 있는 경우
             continue;
         if (ans.back() % 3 == 0 && ans.back() / 3 == arr[i] || // 나3
             (ans.back() * 2 == arr[i]))                        // 곱2

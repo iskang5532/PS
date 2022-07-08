@@ -1,4 +1,4 @@
-/* 
+/*
  * 1238 파티
  * 다익스트라
  * 시간 복잡도: ?
@@ -48,7 +48,7 @@ vector<int> Dijkstra(const vector<Link> arr[])
 
         for (int i = 0; i < arr[curr_vertex].size(); i++) // auto로
         {
-            int next_vertex = arr[curr_vertex][i].end_vertex; // i번쨰 다음 위치 (현재 위치와 인접)
+            int next_vertex = arr[curr_vertex][i].end_vertex; // i번째 다음 위치 (현재 위치와 인접)
             int next_cost = arr[curr_vertex][i].cost;         // 다음 위치까지의 비용
 
             if (dist[next_vertex] > curr_cost + next_cost) // 만약 저장된 비용이 더 큰 경우 (= 갱신 가능)

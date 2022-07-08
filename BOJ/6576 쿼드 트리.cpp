@@ -62,7 +62,7 @@ int main()
             int sum = 0;
             for (int k = 0; k < 8; k++)
                 if (board[i][j + k] == 'B')
-                    sum |= 1 << k; // k번쨰 비트를 킴
+                    sum |= 1 << k; // k번째 비트를 킴
 
             cout << "0x";
             cout << "0123456789abcdef"[sum >> 4]; // 10의 자리

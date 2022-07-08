@@ -33,7 +33,7 @@ int main()
     int n; // 1 ≤ n ≤ 90
     cin >> n;
 
-    ll dp[MAX]; // i번쨰 피보나치 수를 저장
+    ll dp[MAX]; // i번째 피보나치 수를 저장
     fill(dp, dp + MAX, 0);
 
     dp[1] = dp[2] = 1;

@@ -6,7 +6,7 @@
     풀이)
     - 차량의 남은 주차 시간을 저장할 v. (v[i] = t일 때, i번째 차량의 남은 기본 시간은 t. 만약 음수일 경우, -t만큼 시간 초과)
     - 차량의 입/출차 시간의 시를 분으로 바꿔 연산. (= hour_to_min)
-    - 차량의 입차 시간을 저장할 car_lsit. (car_list[i] = t일 때, i번쨰 차량의 입차 시간은 t)
+    - 차량의 입차 시간을 저장할 car_list. (car_list[i] = t일 때, i번째 차량의 입차 시간은 t)
     1. 입/출차 기록(= records)를 확인.
     만약 차량이 입차 된 경우, car_list에 차량의 번호와 입차 시간을 저장.
     만약 차량이 출차 된 경우, 해당 차량의 입차 시간을 이용해 주차된 시간을 v에서 제거. 또한, car_list에서 제거.
@@ -35,7 +35,7 @@ vector<int> solution(vector<int> fees, vector<string> records)
 {
     const int def_t = fees[0]; // 기본 시간
 
-    int v[MAX]; // v[i] = t일 때, i번쨰 차량의 남은 시간 t
+    int v[MAX]; // v[i] = t일 때, i번째 차량의 남은 시간 t
     fill(v, v + MAX, def_t);
 
     unordered_map<int, int> car_list; // 차량의 출입 시간을 저장

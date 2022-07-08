@@ -30,7 +30,7 @@ int main()
 /*
     sol.2) nth_element (KB, ms)
     시간 복잡도: O(n)
-    풀이) nth_element를 이용해 k번쨰 수를 [k-1]의 위치로 옮김. (주의할 점은, 그 외의 값들은 정렬된 것이 아님)
+    풀이) nth_element를 이용해 k번째 수를 [k-1]의 위치로 옮김. (주의할 점은, 그 외의 값들은 정렬된 것이 아님)
     참고)
     - 이론: https://blog.naver.com/jinhan814/222547222163
  */
