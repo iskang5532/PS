@@ -1,3 +1,65 @@
+// 2022-08-18
+// 2108 통계학
+// https://www.acmicpc.net/problem/2108
+/*
+    구현, 정렬 (3,884KB, 76ms)
+    시간 복잡도: ?
+    풀이)
+    1. 산술평균
+    - 입력된 n개의 수를 더한 후 n으로 나눔. 이때, 반올림을 수행해야 하므로 더한 값을 double형으로 형변환 후 나눠줘야 함.
+    또한, 반올림 시 -0이 나올 수 있으므로 반올림된 값을 int형으로 변환하거나 조건문을 추가하여 0을 출력하도록 해줌.
+    2. 중앙값: 입력된 n개의 값 중 중앙의 값을 출력.
+    3. 최빈값
+    - 입력된 값의 개수를 cnt에 저장한 후, 가장 많이 나온 값을 찾음. (최솟값인 -4,000이 음수이므로, 4,000을 더하여 음수를 없앰)
+    만약, 여러개일 경우 두 번째로 작은 값을 찾음.
+    - 수 i의 개수 cnt[i]를 확인하며, 만약 이전까지의 최대 개수인 mx보다 많은 경우, 최빈값 ret을 갱신.
+    만약 mx == cnt[i]이면서두 번째 값일 경우, ret을 갱신하며 flag = true. (flag가 true일 경우, 이후 mx == cnt[i]여도 ret을 갱신하지 않음)
+    4. 범위: 입력된 n개의 수를 정렬한 후 최댓값과 최솟값의 차이를 출력.
+ */
+
+#include <iostream>
+#include <algorithm> // sort
+#include <numeric>   // accumulate
+#include <cmath>     // round
+
+using namespace std;
+#define FAST_IO ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
+#define endl '\n'
+#define MAX 500'003 // max n
+#define MAX_K 8'003 // max k
+
+int get_mode(int cnt[])
+{
+    int ret = 0;
+    int mx = 0, flag = false; // 가장 많이 나온 개수 mx, 두 번쨰 값의 여부 flag
+    for (int i = 0; i < MAX_K; i++)
+        if (mx < cnt[i])
+            mx = cnt[i], ret = i, flag = false;
+        else if (mx == cnt[i] && !flag) // 개수가 같으면서 두 번째 값일 경우
+            ret = i, flag = true;
+
+    return ret - 4000;
+}
+
+int main()
+{
+    FAST_IO;
+
+    int n;
+    cin >> n;
+    int v[MAX]{}, cnt[MAX_K]{}; // |v[i]| ≤ 4,000, cnt[i] = k일 경우, i는 k번 입력받음
+    for (int i = 0; i < n; i++)
+        cin >> v[i], cnt[4000 + v[i]]++;
+
+    sort(v, v + n);
+
+    cout << (int)round((double)accumulate(v, v + n, 0) / n) << endl; // 산술평균
+    cout << v[n / 2] << endl;                                        // 중앙값
+    cout << get_mode(cnt) << endl;                                   // 최빈값
+    cout << v[n - 1] - v[0];                                         // 범위
+}
+
+// ~08-18
 // 2108 통계학
 // https://www.acmicpc.net/problem/2108
 /*
