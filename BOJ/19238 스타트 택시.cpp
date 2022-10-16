@@ -1,3 +1,124 @@
+// 2022-10-09
+// 19238 스타트 택시
+// https://www.acmicpc.net/problem/19238
+/*
+    구현, BFS (2,160KB, 12ms)
+    시간 복잡도: ?
+    풀이)
+    etc.)
+    참고)
+ */
+
+#include <iostream>
+#include <queue>
+#include <algorithm> // sort
+
+using namespace std;
+#define FAST_IO ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
+using pii = pair<int, int>;
+#define INF 0x3f3f3f3f
+#define y first
+#define x second
+
+constexpr int dy[] = {-1, 0, 1, 0};
+constexpr int dx[] = {0, 1, 0, -1};
+
+struct P
+{
+    pii st, ed; // 출발지, 목적지
+    int dist;   // 출발지까지의 거리
+};
+
+int n, m, puel; //  영역의 크기 (2 ≤ n ≤ 20), 승객의 수 (1 ≤ m ≤ n^2), 연료의 양 (1 ≤ puel ≤ 500k)
+
+bool OOB(int ny, int nx) { return !(1 <= ny && ny <= n) || !(1 <= nx && nx <= n); }
+
+bool cmp(const P &p1, const P &p2) // 큰 값이 앞으로
+{
+    auto [s1, idx1, c1] = p1;
+    auto [s2, idx2, c2] = p2;
+
+    return c1 != c2 ? c1 > c2
+                    : (s1.y != s2.y ? s1.y > s2.y
+                                    : s1.x > s2.x);
+};
+
+vector<vector<int>> get_dist(const vector<vector<int>> &arr, const pii &taxi) // 출발지 or 목적지까지의 거리 구하기
+{
+    vector<vector<int>> dist(n + 1, vector<int>(n + 1, INF));
+    dist[taxi.y][taxi.x] = 0;
+    queue<pii> q;
+    q.push(taxi);
+
+    while (!q.empty())
+    {
+        auto [y, x] = q.front();
+        q.pop();
+
+        for (int d = 0; d < 4; d++)
+        {
+            auto [ny, nx] = pii{y + dy[d], x + dx[d]};
+
+            if (OOB(ny, nx))
+                continue;
+            if (dist[ny][nx] != INF || arr[ny][nx]) // 이미 탐색 or 벽
+                continue;
+
+            dist[ny][nx] = dist[y][x] + 1;
+            q.push(pii{ny, nx});
+        }
+    }
+
+    return dist;
+}
+
+int main()
+{
+    FAST_IO;
+
+    cin >> n >> m >> puel;
+
+    vector<vector<int>> arr(n + 1, vector<int>(n + 1));
+    for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= n; j++)
+            cin >> arr[i][j];
+
+    pii taxi;
+    cin >> taxi.y >> taxi.x;
+
+    vector<P> people(m); // 출발지, 목적지, 택시-출발지의 거리
+    for (auto &[st, ed, idx] : people)
+        cin >> st.y >> st.x >> ed.y >> ed.x;
+
+    while (people.size())
+    {
+        auto dist = get_dist(arr, taxi); // 거리 구하기 (to 사람)
+        for (auto &[st, ed, _dist] : people)
+            _dist = dist[st.y][st.x]; // 사람의 정보에 거리 저장
+
+        sort(people.begin(), people.end(), cmp); // 택시-사람의 거리를 이용한 정렬
+
+        const auto &[st, ed, _dist] = people.back(); // 가장 가까운 사람의 정보를 빼냄
+        people.pop_back();
+
+        taxi = pii{st.y, st.x}; // 택시 이동 (사람의 위치)
+        puel -= _dist;
+
+        dist = get_dist(arr, taxi); // 거리 구하기 (to 목적지)
+
+        taxi = pii{ed.y, ed.x}; // 택시 이동 (목적지로)
+        puel -= dist[ed.y][ed.x];
+
+        if (_dist == INF || puel < 0) // 손님을 목적지로 이동시킬 수 없는 경우
+            break;
+
+        puel += dist[ed.y][ed.x] * 2;
+    }
+
+    cout << (people.empty() ? puel : -1);
+}
+
+// ~2022-10-09
 /*
    19238 스타트 택시
    구현 (2160KB, 12ms)
@@ -136,3 +257,28 @@ int main()
         puel += dist[end.col][end.row] * 2;
     }
 }
+
+// input:
+// 6 4 15
+// 0 0 1 0 0 0
+// 0 0 1 0 0 0
+// 0 0 0 0 0 0
+// 0 0 0 0 0 0
+// 0 0 0 0 1 0
+// 0 0 0 1 0 0
+// 6 5
+// 2 2 5 6
+// 5 4 1 6
+// 4 2 3 5
+// 1 6 5 4
+// ans:
+// 20
+
+// input:
+// 2 1 1
+// 0 0
+// 0 1
+// 0 0
+// 0 1 0 0
+// ans:
+// -1
