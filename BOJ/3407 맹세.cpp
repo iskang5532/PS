@@ -94,7 +94,7 @@ int main()
 }
 
 /*
-    DFS (5,544KB, 28ms)
+    sol.2) DFS (5,544KB, 28ms)
     시간 복잡도: ?
  */
 
