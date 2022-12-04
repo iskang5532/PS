@@ -2,7 +2,7 @@
 // 14906 스러피
 // https://www.acmicpc.net/problem/14906
 /*
-    재귀, 구현 (2,024KB, 0ms)
+    재귀, 구현 (14,212KB, 128ms)
     시간 복잡도: ?
     풀이)
     - 입력된 문자열이 스러피인지 확인. (이때, 입력받은 문자열 s에 임의의 문자를 추가하여 StringIndexOutOfBounds를 방지)
