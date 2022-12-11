@@ -1,6 +1,6 @@
 // 2022-12-04
-// 14906 스러피
-// https://www.acmicpc.net/problem/14906
+// 14906 스러피, 6493 Slurpys
+// https://boj.kr/14906 https://boj.kr/6493
 /*
     재귀, 구현 (2,024KB, 0ms)
     시간 복잡도: ?

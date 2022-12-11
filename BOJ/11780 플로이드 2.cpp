@@ -1,6 +1,5 @@
 // 11780 플로이드 2
 // https://www.acmicpc.net//problem/11780
-// https://puu.sh/IBHfM/116d314e31.png
 /*
     플로이드 와샬 (2,156KB, 32ms)
     시간 복잡도: O(V^3) (3중 for문)
