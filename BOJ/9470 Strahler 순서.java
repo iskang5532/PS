@@ -2,7 +2,7 @@
 // 9470 Strahler 순서
 // https://www.acmicpc.net/problem/9470
 /*
-    위상 정렬 (14,532KB, 136ms)
+    위상정렬 (14,532KB, 136ms)
     시간 복잡도: ?
     풀이)
     - in_degree[]에 해당 노드에 들어오는 간선의 개수를 저장.
