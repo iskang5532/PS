@@ -1,5 +1,5 @@
 // 2023-03-22
-// 15874 Caesar Cipher 
+// 15874 Caesar Cipher
 // https://www.acmicpc.net/problem/15874
 /*
     구현, 문자열 (2,268KB, 8ms)
